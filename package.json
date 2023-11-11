@@ -1,0 +1,14 @@
+{
+  "name": "kanban_app",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "if-env TYPE=server && (cd server && npm install) || (cd client && npm install)",
+    "start": "node ./server/server.js",
+    "client": "cd client && npm start"
+  },
+  "dependencies": {
+    "if-env": "^1.0.4",
+    "react-router-dom": "^6.18.0"
+  }
+}

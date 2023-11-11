@@ -1,0 +1,20 @@
+.upper-bar{
+    position: relative;
+}
+
+.upper-bar, .upper-bar-title-box, .board-title-box, .add-task-box{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 5px;
+    height: 10%;
+    background-color: var(--dark-gray);
+    color: var(--white);
+}
+
+
+
+.board-title, .board-title-box{
+    cursor: pointer;
+}

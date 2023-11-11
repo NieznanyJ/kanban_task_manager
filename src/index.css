@@ -1,0 +1,122 @@
+@font-face {
+    font-family: JakartaSans;
+    src: url(/public/fonts/PlusJakartaSans-VariableFont_wght.woff2);
+    weight: 200 800;
+}
+
+@font-face {
+    font-family: JakartaSansItalic;
+    src: url(/public/fonts/PlusJakartaSans-Italic-VariableFont_wght.woff2);
+    weight: 200 800;
+}
+
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* COLORS */
+
+:root{
+
+    --main-purple: #635FC7;
+    --main-purple-hover: #A8A4FF;
+    --black: #000112;
+    --very-dark-gray: #20212C;
+    --dark-gray: #2B2C37;
+    --medium-gray: #828FA3;
+    --white: #FFFFFF;
+    --light-background: #F4F7FD;
+    --red: #EA5555;
+    --red-hover: #FF9898;
+    --light-gray: #F4F7FD;
+    --lines-dark: #3E3F4E;
+    --lines-light: #E4EBFA;
+}
+
+/* TYPOGRAPHY */
+
+*{
+    font-family: JakartaSans, 'Arial', 'sans-serif';
+}
+
+.heading-xl{
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 30px;
+}
+
+.heading-l{
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 23px;
+}
+
+.heading-m{
+    font-size: 15px;
+    font-weight: bold;
+    line-height: 19px;
+}
+
+.heading-s{
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 15px;
+    letter-spacing: 2.4px;
+}
+
+.body-l{
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 23px;
+}
+
+.body-m{
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 15px;
+}
+
+
+.btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 20px;
+    border-radius: 30px;
+    border: none;
+    outline: none;
+    transition: all .3s ease;
+    cursor: pointer;
+}
+
+.main-btn{
+    display: flex;
+    background-color: var(--main-purple);
+    color: var(--white);
+}
+
+.main-btn:hover{
+    background-color: var(--main-purple-hover);
+    color: var(--white);
+}
+
+.secondary-btn{
+    color: var(--main-purple);
+    background-color: var(--light-background);
+}
+
+.secondary-btn:hover{
+    background-color: var(--main-purple-hover);
+    color: var(--white);
+}
+
+.overlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.4);
+}
