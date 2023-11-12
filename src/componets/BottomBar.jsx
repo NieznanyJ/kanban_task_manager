@@ -12,7 +12,7 @@ function BottomBar() {
   return (
     <div className="bottom-bar">
         <h4 className="user-name body-l">Welcome {username}</h4>
-        <button className='btn sign-out-btn body-l' onClick={signOut}>Sign out</button>
+        <button className='btn btn-red sign-out-btn body-l' onClick={signOut}>Sign out</button>
     </div>
   )
 }

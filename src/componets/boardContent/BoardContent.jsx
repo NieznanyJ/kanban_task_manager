@@ -12,7 +12,7 @@ function BoardContent() {
   return (
     <section className="board-content">
 
-    {currentBoard.columns.length ? <Columns></Columns> :   <NoColumns></NoColumns>}
+    {currentBoard.columns.length && currentBoard.columns  ? <Columns></Columns> :   <NoColumns></NoColumns>}
 
         {/* <div className="board-content-add-new-box">
             <h3 className='heading-l'>

@@ -23,7 +23,7 @@ function NewBoardForm() {
                 body: JSON.stringify(newBoard),
             })
             const json = await response.json()
-            console.log(json)
+            
             getData()
         } catch (error) {
             console.error(error)
@@ -41,7 +41,6 @@ function NewBoardForm() {
             columns: columnTitle.current,
         } 
 
-        console.log(JSON.stringify(newBoard.title))
         postData(newBoard) 
         setShowAddModal(false)
         

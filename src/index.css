@@ -112,6 +112,15 @@
     color: var(--white);
 }
 
+.btn-red{
+    background-color: var(--red);
+    color: var(--white);
+}
+
+.btn-red:hover{
+    background-color: var(--red-hover);
+}
+
 .overlay{
     position: fixed;
     top: 0;

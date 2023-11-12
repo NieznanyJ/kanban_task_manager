@@ -32,8 +32,9 @@ app.post('/boards/:username', async (req, res) => {
     const { title, columns } = req.body
     
     const id = uuidv4()
+
     try {
-        pool.query(`INSERT INTO boards (id, username, title, columns) VALUES ($1, $2, $3, $4)`, [id, username, title, columns])
+        await pool.query(`INSERT INTO boards (id, username, title, columns) VALUES ($1, $2, $3, $4)`, [id, username, title, columns])
         res.json(req.body)
         console.log("success")
     } catch (error) {
@@ -44,18 +45,33 @@ app.post('/boards/:username', async (req, res) => {
 
 //replace data in board
 
-app.put('/boards/:username/:title', async (req, res) => {
+app.put('/boards/:username/:id', async (req, res) => {
+    const { id } = req.params
+    const {title, columns } = req.body
     try{
-        const { title, columns } = req.body
-        pool.query(`UPDATE boards SET  columns = $1 WHERE title = $2`, [ columns, title])
+        await pool.query(`UPDATE boards SET  columns = $1, title = $2 WHERE id = $3`, [ columns,title, id])
         res.json(req.body)
-        console.log("success")
+        console.log("edited successfully")
 
     }catch(error){
         console.error(error)
     }
 })
 
+
+//delete board
+
+app.delete('/boards/:username/:id', async (req, res) => {
+    const { id } = req.params
+
+    try{
+        await pool.query(`DELETE FROM boards WHERE id = $1`, [id])
+        console.log('deleted successfully')
+    }catch(error){
+        console.error(error)
+    }
+
+})
 
 
 app.listen(PORT, () => console.log(`Server running at PORT ${PORT}`))
