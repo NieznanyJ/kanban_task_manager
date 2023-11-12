@@ -4,13 +4,14 @@ import { ModalBoxContext } from '../context/Context'
 
 function Overlay({setShowDeleteBoardModal}) {
 
-  const [showModalBox, setShowModalBox, setShowAddModal, addMode, setAddMode, showEditModal, setShowEditModal] = useContext(ModalBoxContext)
+  const [showModalBox, setShowModalBox, setShowAddModal, addMode, setAddMode, showEditModal, setShowEditModal, showAddTask, setShowAddTask] = useContext(ModalBoxContext)
 
   const closeModals = () =>{
     setShowModalBox(false)
     setShowAddModal(false)
     if (setShowDeleteBoardModal){setShowDeleteBoardModal(false)}
     setShowEditModal(false)
+    setShowAddTask(false)
   }
 
   return (

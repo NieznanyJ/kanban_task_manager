@@ -25,6 +25,7 @@ function NewBoardForm() {
             const json = await response.json()
             
             getData()
+            window.location.reload()
         } catch (error) {
             console.error(error)
         }

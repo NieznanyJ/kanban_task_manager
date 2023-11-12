@@ -16,7 +16,7 @@ import EditBoardModal from './editModal/editBoardModal'
 
 function UpperBar() {
 
-    const [showModalBox, setShowModalBox] = useContext(ModalBoxContext)
+    const [showModalBox, setShowModalBox, setShowAddModal, addMode, setAddMode, showEditModal, setShowEditModal, showAddTask, setShowAddTask] = useContext(ModalBoxContext)
     const [boards, setBoards, currentBoard] = useContext(AppContext)
 
     const [showDeleteBoardModal, setShowDeleteBoardModal] = useState(false)
@@ -37,7 +37,7 @@ function UpperBar() {
 
             <div className="add-task-box">
                 <button className="btn main-btn">
-                    <IconAddTaskMobile></IconAddTaskMobile>
+                    <IconAddTaskMobile setAddMode={setAddMode} setShowAddModal={setShowAddModal}></IconAddTaskMobile>
                 </button>
                 <IconElipse setShowBoardOptionModal={setShowBoardOptionModal}></IconElipse>
             </div>

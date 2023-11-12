@@ -1,12 +1,18 @@
 import React from 'react'
 
-function IconCross({newColumns, setNewColumns,id}) {
+function IconCross({newColumns, setNewColumns,id, newSubtasks, setNewSubtasks}) {
 
   const deleteNewColumn = (id) =>{
     
-    const currentColumns = newColumns.filter(column => column.id !== id)
-    console.log(currentColumns)
-    setNewColumns(currentColumns)
+    if (newColumns){
+      const currentColumns = newColumns.filter(column => column.id !== id)
+      setNewColumns(currentColumns)
+    }
+
+    if(newSubtasks){
+      const currentSubtasks = newSubtasks.filter(subtask => subtask.id !== id)
+      setNewSubtasks(currentSubtasks)
+    }
 
 }
   return (

@@ -15,10 +15,13 @@
 
 
 .column{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     scroll-snap-align: center;
     color: #fff;
     border: 1px solid #fff;
-    width: 250px;
+    width: 280px;
     flex-shrink: 0;
 
 }
@@ -42,5 +45,28 @@
 }
 
 
+.tasks-box{
+    width: 100%;
+    height: 100%;
+    padding: 1em 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    overflow-y: scroll;
+}
 
 
+.task{
+    flex-shrink: 0;
+    width: 100%;
+    height: 150px;
+    background-color: var(--red);
+    border-radius: 5px;
+}
+
+
+
+
+.dragging{
+    opacity: .5;
+}

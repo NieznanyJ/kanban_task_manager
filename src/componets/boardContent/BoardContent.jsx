@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useRef } from 'react'
 import { AppContext } from '../../context/Context'
 import NoColumns from './NoColumns'
 import Columns from './Columns'
@@ -8,11 +8,16 @@ function BoardContent() {
 
   const [boards, setBoards, currentBoard] = useContext(AppContext)
 
+  const currentColumnsLength = useRef(null)
+
+  if (currentBoard.columns.length){
+     currentColumnsLength.current = currentBoard.columns.length
+  }
 
   return (
     <section className="board-content">
 
-    {currentBoard.columns.length && currentBoard.columns  ? <Columns></Columns> :   <NoColumns></NoColumns>}
+    {currentColumnsLength.current && currentBoard.columns  ? <Columns></Columns> :   <NoColumns></NoColumns>}
 
         {/* <div className="board-content-add-new-box">
             <h3 className='heading-l'>

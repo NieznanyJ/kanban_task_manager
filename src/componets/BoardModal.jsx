@@ -12,7 +12,7 @@ import { AppContext, ModalBoxContext } from '../context/Context';
 function BoardModal() {
 
     const [boards, setBoards, currentBoard, setCurrentBoard] = useContext(AppContext);
-    const [showModalBox, setShowModalBox, setShowAddModal, addMode, setAddMode] = useContext(ModalBoxContext);
+    const [showModalBox, setShowModalBox, setShowAddModal, addMode, setAddMode, showEditModal, setShowEditModal, showAddTask, setShowAddTask] = useContext(ModalBoxContext);
     
     const nrOfBoards = boards ?  boards.length : 0
 
