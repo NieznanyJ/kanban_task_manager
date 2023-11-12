@@ -1,34 +1,40 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import NewColumnInput from './NewColumnInput'
-import {UserContext , ModalBoxContext} from '../../context/Context'
+import {UserContext , ModalBoxContext, AppContext} from '../../context/Context'
 
 
-function NewBoardForm() {
+function NewColumnForm() {
 
     const [newColumns, setNewColumns] = useState([{ id: Math.random(), title: "Todo" }, { id: Math.random(), title: "Doing" }])
     const columnTitle = useRef([])
 
     const [logged, setLogged, username, getData] = useContext(UserContext)
+    const [boards, setBoards, currentBoard, setCurrentBoard] = useContext(AppContext)
     const [showModalBox, setShowModalBox, setShowAddModal] = useContext(ModalBoxContext)
 
+    console.log(currentBoard)
 
-    const postData = async (newBoard) => {
 
-        try {
-            const response = await fetch(`http://localhost:8000/boards/${username}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(newBoard),
-            })
-            const json = await response.json()
-            console.log(json)
-            getData()
-        } catch (error) {
-            console.error(error)
-        }
+    //update database with new board data
+
+    const putData = async (newBoard) => {
+            
+            try {
+                const response = await fetch(`http://localhost:8000/boards/${username}/${currentBoard.title}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(newBoard),
+                })
+                const json = await response.json()
+                console.log(json)
+                getData()
+            } catch (error) {
+                console.error(error)
+            }
     }
+
 
     //function that handles new board submit
 
@@ -37,12 +43,12 @@ function NewBoardForm() {
         handleNewColumn();
          const newBoard = {
             username: username,
-            title: e.target['board-title'].value,
+            title: currentBoard.title,
             columns: columnTitle.current,
         } 
 
         console.log(JSON.stringify(newBoard.title))
-        postData(newBoard) 
+        putData(newBoard) 
         setShowAddModal(false)
         
     }
@@ -76,11 +82,8 @@ function NewBoardForm() {
 
     return (
         <form action="post" onSubmit={handleSubmit} className='add-new-from add-new-board-from'>
-            <h2 className='add-new-title heading-l'>Add New Board</h2>
-            <div className="add-new-input-box">
-                <label htmlFor="board-title" className='body-l'>Board Name</label>
-                <input id='board-title' name='board-title' type="text" placeholder='e.g. Web Design' />
-            </div>
+            <h2 className='add-new-title heading-l'>Add New Column</h2>
+            
             <div className="add-new-input-box">
                 <label htmlFor="board-columns" className='body-l'>Board Columns</label>
                 <div className="add-new-input-box new-column-box">
@@ -92,11 +95,11 @@ function NewBoardForm() {
 
             <div className="add-new-button-box">
                 <button type='button' className='btn add-new-btn secondary-btn body-m' onClick={addNewColumns}>+ Add New Column</button>
-                <button type='submit' className='btn add-new-btn main-btn body-m'>Create New Board</button>
+                <button type='submit' className='btn add-new-btn main-btn body-m'>Add Columns</button>
             </div>
 
         </form>
     )
 }
 
-export default NewBoardForm
+export default NewColumnForm

@@ -14,13 +14,11 @@ function NewColumnInput({id, value, newColumns, setNewColumns}) {
         
     }
 
-    
-
-
+  
     
   return (
     <div className='new-column-input' key={id}>
-        <input id='board-columns' value={currentValue} name='board-columns' type="text" placeholder='e.g. Todo' onChange={(onChange)}/>
+        <input itemID={id} className='new-column-input input' id='board-columns' value={currentValue} name='board-columns' type="text" placeholder='e.g. Todo' onChange={(onChange)}/>
         <IconCross newColumns={newColumns} setNewColumns={setNewColumns} id={id}></IconCross>
     </div>
   )

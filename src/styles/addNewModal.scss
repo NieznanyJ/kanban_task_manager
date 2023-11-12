@@ -15,12 +15,11 @@
 }
 
 .new-column-box{
-    max-height: 200px;
-    overflow-y: scroll;
-
+    max-height: 190px;
+    overflow-y: scroll;  
 }
 
-.new-column-box::-webkit-scrollbar{
+.new-column-box::-webkit-scrollbar {
     display: none;
 }
 
@@ -60,4 +59,6 @@
     align-items: center;
     gap: 5px;
 }
+
+
 

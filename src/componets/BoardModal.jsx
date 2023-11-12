@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import Overlay from './Overlay';
 import IconBoard from './icons/IconBoard';
 import Board from './Board';
@@ -6,12 +6,13 @@ import ToggleSwitch from './ToggleSwitch';
 import IconDarkTheme from './icons/IconDarkTheme'
 import IconLightTheme from './icons/IconLightTheme'
 
-import { AppContext } from '../context/Context';
+import { AppContext, ModalBoxContext } from '../context/Context';
 
 
 function BoardModal() {
 
     const [boards, setBoards, currentBoard, setCurrentBoard] = useContext(AppContext);
+    const [showModalBox, setShowModalBox, setShowAddModal, addMode, setAddMode] = useContext(ModalBoxContext);
     
     const nrOfBoards = boards ?  boards.length : 0
 
@@ -28,11 +29,16 @@ function BoardModal() {
                         )
                     }) : ''}
 
-                    <h3 className='heading-m board-text' style={{ color: 'var(--main-purple)', paddingLeft: '1rem', marginTop : '5px' }}>
+                    
+                </ul>
+                <h3 className='heading-m board-text' style={{ color: 'var(--main-purple)', paddingLeft: '1rem', marginTop : '5px' }} onClick={() => {
+                    setShowModalBox(false)
+                    setShowAddModal(true)
+                    setAddMode('newBoard')
+                }}>
                         <IconBoard color={'var(--main-purple)'} ></IconBoard>
                         + Create new board
                     </h3>
-                </ul>
 
                 <div className="theme-box">
                     <IconLightTheme></IconLightTheme>

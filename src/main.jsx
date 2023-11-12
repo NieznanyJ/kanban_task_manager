@@ -9,6 +9,7 @@ import './styles/boardModal.css'
 import './styles/toggleSwitch.css'
 import './styles/loginPage.css'
 import './styles/addNewModal.css'
+import './styles/column.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>

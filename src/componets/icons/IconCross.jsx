@@ -14,4 +14,5 @@ function IconCross({newColumns, setNewColumns,id}) {
   )
 }
 
+
 export default IconCross
