@@ -54,8 +54,8 @@ function AddNewTaskForm() {
     }
 
     if (!errors.current) {
-     /*  postData(newTask)
-      setShowAddModal(false) */
+      /*  postData(newTask)
+       setShowAddModal(false) */
     }
 
   }
@@ -63,7 +63,8 @@ function AddNewTaskForm() {
 
 
   const handleErrors = (e) => {
-    const inputs = document.getElementsByTagName('input')
+    const form = document.querySelector('.add-new-from')
+    const inputs = form.getElementsByTagName('input')
     const errorMsgs = document.querySelectorAll('.error-msg')
     console.log(inputs)
     const inputArray = [...inputs]
@@ -88,7 +89,7 @@ function AddNewTaskForm() {
     })
   }
 
-  const deleteError = () =>{
+  const deleteError = () => {
 
     const inputs = document.getElementsByTagName('input')
     const errorMsgs = document.querySelectorAll('.error-msg')
@@ -96,10 +97,10 @@ function AddNewTaskForm() {
     const inputArray = [...inputs]
 
     inputArray.forEach((input, index) => {
-        input.classList.remove('input-error')
-        errorMsgs[index].classList.add('hidden')
+      input.classList.remove('input-error')
+      errorMsgs[index].classList.add('hidden')
     })
-}
+  }
 
 
 
@@ -149,10 +150,10 @@ function AddNewTaskForm() {
       <h2 className='add-new-title heading-l'>Add New Task</h2>
       <div className="add-new-input-box">
         <label htmlFor="task-title" className='body-l'>Title</label>
-      <div className="input-container">
-      <input id='task-title' name='task-title' type="text" placeholder='e.g. Take coffee break' onChange={deleteError} />
-    <ErrorMsg></ErrorMsg>
-      </div>
+        <div className="input-container">
+          <input id='task-title' name='task-title' type="text" placeholder='e.g. Take coffee break' onChange={deleteError} />
+          <ErrorMsg></ErrorMsg>
+        </div>
       </div>
       <div className="add-new-input-box">
         <label htmlFor="task-description" className='body-l'>Description</label>

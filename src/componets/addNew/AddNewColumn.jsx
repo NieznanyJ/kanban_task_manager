@@ -3,15 +3,30 @@ import NewColumnInput from './NewColumnInput'
 import { UserContext, ModalBoxContext, AppContext } from '../../context/Context'
 
 
-function NewColumnForm() {
+function AddNewColumn() {
 
-    const [newColumns, setNewColumns] = useState([{ id: Math.random(), title: "Todo" }, { id: Math.random(), title: "Doing" }])
+    const [newColumns, setNewColumns] = useState(null)
     const columnTitle = useRef([])
 
     const [logged, setLogged, username, getData] = useContext(UserContext)
     const [boards, setBoards, currentBoard, setCurrentBoard] = useContext(AppContext)
     const [showModalBox, setShowModalBox, setShowAddModal] = useContext(ModalBoxContext)
     const errors = useRef(null)
+
+
+
+    useEffect(() => {
+        const currrentColumns = currentBoard.columns.map(column => {
+            const newColumn = {
+                id: Math.random(),
+                title: column
+            }
+    
+            return newColumn
+        })
+    
+        setNewColumns(currrentColumns)
+    },[])
 
 
 
@@ -59,19 +74,22 @@ function NewColumnForm() {
         const form = document.querySelector('.add-new-from')
         const inputs = form.getElementsByTagName('input')
         const errorMsgs = document.querySelectorAll('.error-msg')
+        console.log(errorMsgs.length)
         console.log(inputs)
 
         //if any input is empty, show error message
 
         let hasErrors = false;
 
-        [...inputs].forEach((input, index) => {
+        const inputArray = [...inputs]
+
+        inputArray.forEach((input, index) => {
             if (input.value === '') {
-                errorMsgs[index].classList.remove('hidden');
-                input.classList.add('input-error');
+                errorMsgs[index].classList.remove('hidden')
+                input.classList.add('input-error')
                 hasErrors = true;
             } else {
-                errorMsgs[index].classList.add('hidden');
+                errorMsgs[index].classList.add('hidden')
             }
         })
 
@@ -107,7 +125,8 @@ function NewColumnForm() {
             id: Math.random(),
             title: "",
         };
-        setNewColumns((prev) => [...prev, newColumn]);
+        console.log(newColumns)
+        setNewColumns((prev) => [...prev, newColumn]); 
     };
 
 
@@ -133,4 +152,4 @@ function NewColumnForm() {
     )
 }
 
-export default NewColumnForm
+export default AddNewColumn

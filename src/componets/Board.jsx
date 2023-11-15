@@ -6,7 +6,7 @@ function Board({ id, title }) {
 
   const [boards, setBoards, currentBoard, setCurrentBoard] = useContext(AppContext);
   const [showModalBox, setShowModalBox, setShowAddModal] = useContext(ModalBoxContext);
-
+  const screenWidth = window.innerWidth
 
 
   const selectBoard = (title) => {
@@ -30,14 +30,14 @@ function Board({ id, title }) {
     if (currentBoard){
       selectBoard(currentBoard.title)
     }
-  },[])
+  },[currentBoard])
 
 
   return (
     <li 
     className="board-item" key={id} onClick={() => {
       selectBoard(title)
-      setShowModalBox(false)
+      (screenWidth < 768 && setShowModalBox(false))
     }}>
         <h3 className="heading-m board-text">
         <IconBoard color={"#828FA3"}></IconBoard>

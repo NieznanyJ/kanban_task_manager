@@ -55,6 +55,21 @@
     overflow-y: scroll;
 }
 
+.new-column{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #2B2C37;
+    color: var(--medium-gray);
+    transition: all .3 ease;
+    cursor: pointer;
+}
+
+.new-column:hover{
+    background-color: #3B3C47; 
+}
+
 
 .task{
     flex-shrink: 0;

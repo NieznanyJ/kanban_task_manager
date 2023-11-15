@@ -33,8 +33,9 @@ function NewSubtaskInput({id, placeholder, newSubtasks, setNewSubtasks}) {
     <div className='new-column-input' key={id}>
       <div className="input-container">
       <input itemID={id} className='new-column-input input' id='board-columns' value={currentValue} name='board-columns' type="text" placeholder={placeholder ? "e.g. "+placeholder : ""}  onChange={(e) => {
-        deleteError()
         onChange(e)
+        deleteError()
+        
       }}/>
     <ErrorMsg></ErrorMsg>
       </div>

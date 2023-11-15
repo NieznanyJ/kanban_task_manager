@@ -25,16 +25,31 @@ app.get('/boards/:username', async (req, res) => {
 })
 
 
+const checkDuplicate = async (title, username) => {
+    const currentBoards = await pool.query(`SELECT * FROM boards WHERE username = $1`, [username]);
+    const duplicate = currentBoards.rows.find(board => board.title === title);
+    return duplicate; // Return the duplicate board if found, or undefined if not found
+};
+
 //create new board 
 
 app.post('/boards/:username', async (req, res) => {
     const { username } = req.params
     const { title, columns } = req.body
-    
+
     const id = uuidv4()
 
     try {
-        await pool.query(`INSERT INTO boards (id, username, title, columns) VALUES ($1, $2, $3, $4)`, [id, username, title, columns])
+        const duplicate = await checkDuplicate(title, username);
+
+        if (duplicate) {
+            res.status(400).json({ error: 'Duplicate board title' });
+        } else {
+            await pool.query(`INSERT INTO boards (id, username, title, columns) VALUES ($1, $2, $3, $4)`, [id, username, title, columns]);
+            
+            res.json({ success: true });
+        }          
+        
         res.json(req.body)
         console.log("success")
     } catch (error) {
@@ -47,13 +62,13 @@ app.post('/boards/:username', async (req, res) => {
 
 app.put('/boards/:username/:id', async (req, res) => {
     const { id } = req.params
-    const {title, columns } = req.body
-    try{
-        await pool.query(`UPDATE boards SET  columns = $1, title = $2 WHERE id = $3`, [ columns,title, id])
+    const { title, columns } = req.body
+    try {
+        await pool.query(`UPDATE boards SET  columns = $1, title = $2 WHERE id = $3`, [columns, title, id])
         res.json(req.body)
         console.log("edited successfully")
 
-    }catch(error){
+    } catch (error) {
         console.error(error)
     }
 })
@@ -64,10 +79,10 @@ app.put('/boards/:username/:id', async (req, res) => {
 app.delete('/boards/:username/:id', async (req, res) => {
     const { id } = req.params
 
-    try{
+    try {
         await pool.query(`DELETE FROM boards WHERE id = $1`, [id])
         console.log('deleted successfully')
-    }catch(error){
+    } catch (error) {
         console.error(error)
     }
 

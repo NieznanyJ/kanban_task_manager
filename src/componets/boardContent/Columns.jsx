@@ -1,5 +1,6 @@
 import React, { Children, useContext, useEffect, useMemo, useState } from 'react';
 import { AppContext } from '../../context/Context';
+import NewColumn from '../addNew/NewColumn';
 
 function Columns({ title }) {
     const [boards, setBoards, currentBoard] = useContext(AppContext);
@@ -109,7 +110,9 @@ function Columns({ title }) {
                             </div>
                         </div>
                     );
+                    
                 })}
+                <NewColumn></NewColumn>
             </div>
         );
 }

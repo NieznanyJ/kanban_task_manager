@@ -4,6 +4,7 @@ import NewBoardForm from './newBoardForm'
 import { ModalBoxContext } from '../../context/Context'
 import NewColumnForm from './NewColumnForm'
 import AddNewTaskForm from './AddNewTaskForm'
+import AddNewColumn from './addNewColumn'
 
 function AddNewModal() {
 
@@ -19,6 +20,7 @@ function AddNewModal() {
        {addMode === "newBoard" && <NewBoardForm></NewBoardForm>}
        {addMode === "newColumn" && <NewColumnForm></NewColumnForm>}
        {addMode === "newTask" && <AddNewTaskForm></AddNewTaskForm>}
+       {addMode === "addNewColumn" && <AddNewColumn></AddNewColumn>}
        
        
        

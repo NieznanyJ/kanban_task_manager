@@ -1,0 +1,35 @@
+@media screen and (min-width: 768px) {
+    .app{
+       display: grid !important;
+       grid-template-columns: repeat(7, 1fr);
+       grid-template-rows: 10vh 80vh 10vh;
+   } 
+
+   .board-content{
+       height: 100% !important;
+       grid-column: 2/8 !important;
+       grid-row: 2/3 !important;
+   }
+
+   .bottom-bar{
+       height: 100% !important;
+       grid-column: 2/8 !important;
+       grid-row: 3/4 !important;
+   }
+
+   .upper-bar{
+       height: 100% !important;
+       grid-column: 2/8 !important;
+       grid-row: 1/2 !important;
+   }
+
+   .board-modal{
+       position: static !important;
+       grid-column: 1/2 !important;
+       grid-row: span 4 !important;
+       width: 100% !important;
+       height: 100vh !important;
+       transform: translateX(0) !important;
+       border-radius: 0 !important;
+   }
+}

@@ -5,9 +5,10 @@ import { ModalBoxContext } from '../context/Context'
 function Overlay({setShowDeleteBoardModal}) {
 
   const [showModalBox, setShowModalBox, setShowAddModal, addMode, setAddMode, showEditModal, setShowEditModal, showAddTask, setShowAddTask] = useContext(ModalBoxContext)
+  const screenWidth = window.innerWidth;
 
   const closeModals = () =>{
-    setShowModalBox(false)
+    {screenWidth < 768 && setShowModalBox(false)}
     setShowAddModal(false)
     if (setShowDeleteBoardModal){setShowDeleteBoardModal(false)}
     setShowEditModal(false)

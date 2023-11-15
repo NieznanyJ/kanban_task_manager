@@ -6,8 +6,9 @@ import BoardContent from './componets/boardContent/BoardContent';
 import LoginPage from './componets/loginPage/LoginPage';
 import { AppContext, UserContext, ModalBoxContext } from './context/Context';
 import AddNewModal from './componets/addNew/AddNewModal';
-import EditBoardModal from './componets/editModal/editBoardModal';
+import EditBoardModal from './componets/editModal/EditBoardModal';
 import AddNewTaskForm from './componets/addNew/AddNewTaskForm';
+import BoardModal from './componets/BoardModal';
 
 
 
@@ -16,7 +17,7 @@ function App() {
 
   const [boards, setBoards] = useState(null)
   const [currentBoard, setCurrentBoard] = useState({ id: 0, username: "", title: "No Boards", columns: [] })
-  const username = "fff"
+  const username = "xcvxcvcx"
 
   const getData = async () => {
 
@@ -78,7 +79,7 @@ function App() {
   },[currentBoard])
 
   const [logged, setLogged] = useState(true);
-  const [showModalBox, setShowModalBox] = useState(false);
+  const [showModalBox, setShowModalBox] = useState(true);
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showAddTask, setShowAddTask] = useState(true);
@@ -91,6 +92,7 @@ function App() {
           <>
             <AppContext.Provider value={[boards, setBoards, currentBoard, setCurrentBoard]}>
               <ModalBoxContext.Provider value={[showModalBox, setShowModalBox, setShowAddModal, addMode, setAddMode, showEditModal, setShowEditModal, showAddTask, setShowAddTask]}>
+                {showModalBox && <BoardModal></BoardModal>}
                 <UpperBar></UpperBar>
                 <BoardContent></BoardContent>
                 <BottomBar></BottomBar>

@@ -9,7 +9,7 @@ import { ModalBoxContext, AppContext } from '../context/Context'
 import DeleteBoardModal from './DeleteBoardModal'
 import BoardOptionModal from './BoardOptionModal'
 import Overlay from './Overlay'
-import EditBoardModal from './editModal/editBoardModal'
+import EditBoardModal from './editModal/EditBoardModal'
 
 
 
@@ -21,6 +21,7 @@ function UpperBar() {
 
     const [showDeleteBoardModal, setShowDeleteBoardModal] = useState(false)
     const [showBoardOptionModal, setShowBoardOptionModal] = useState(false)
+    const screenWidth = window.innerWidth;
 
     
 
@@ -30,20 +31,22 @@ function UpperBar() {
         <div className='upper-bar'>
 
             <div className="upper-bar-title-box">
-                <IconLogoMobile></IconLogoMobile>
-                <div className="board-title-box" onClick={() => setShowModalBox(true)}>
+                {screenWidth < 768 && <IconLogoMobile></IconLogoMobile>}
+                <div className="board-title-box" onClick={screenWidth <= 768 ? () => setShowModalBox(prev => !prev) : null}>
                     <h1 className="board-title heading-l">{currentBoard ? currentBoard.title : "No boards"}</h1>
-                    {showModalBox ? <IconChevronUp /> : <IconChevronDown />}
+                    {screenWidth <= 768 && (showModalBox ? <IconChevronUp></IconChevronUp> : <IconChevronDown></IconChevronDown>)}
                 </div>
             </div>
 
             <div className="add-task-box">
-                <button className="btn main-btn">
-                    <IconAddTaskMobile setAddMode={setAddMode} setShowAddModal={setShowAddModal}></IconAddTaskMobile>
+                <button className="btn main-btn heading-m" onClick={() => {
+                    setAddMode("newTask")
+                    setShowAddModal(true)
+                }}>
+                    {screenWidth < 768 ? <IconAddTaskMobile setAddMode={setAddMode} setShowAddModal={setShowAddModal}></IconAddTaskMobile> : "+Add New Task"}
                 </button>
                 <IconElipse setShowBoardOptionModal={setShowBoardOptionModal}></IconElipse>
             </div>
-            {showModalBox && <BoardModal></BoardModal>}
             {showDeleteBoardModal && <>
             <Overlay setShowDeleteBoardModal={setShowDeleteBoardModal}></Overlay>
                 <DeleteBoardModal setShowDeleteBoardModal={setShowDeleteBoardModal}></DeleteBoardModal>

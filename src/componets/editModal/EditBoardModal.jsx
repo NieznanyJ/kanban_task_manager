@@ -89,7 +89,8 @@ function EditBoardModal() {
 
 
     const handleErrors = (e) => {
-        const inputs = document.getElementsByTagName('input')
+        const form = document.querySelector('.add-new-from')
+        const inputs = form.getElementsByTagName('input')
         const errorMsgs = document.querySelectorAll('.error-msg')
         console.log(inputs)
         const inputArray = [...inputs]
