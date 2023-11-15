@@ -1,15 +1,17 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
 import NewColumnInput from './NewColumnInput'
-import {UserContext , ModalBoxContext} from '../../context/Context'
-
+import { UserContext, ModalBoxContext } from '../../context/Context'
+import ErrorMsg from '../ErrorMsg'
 
 function NewBoardForm() {
 
-    const [newColumns, setNewColumns] = useState([{ id: Math.random(), title: "Todo" }, { id: Math.random(), title: "Doing" }])
-    const columnTitle = useRef([])
 
     const [logged, setLogged, username, getData] = useContext(UserContext)
-    const [showModalBox, setShowModalBox, setShowAddModal] = useContext(ModalBoxContext)
+    const [showModalBox, setShowModalBox, setShowAddModal, addMode, setAddMode, showEditModal, setShowEditModal, showAddTask, setShowAddTask] = useContext(ModalBoxContext)
+
+    const [newColumns, setNewColumns] = useState([{ id: Math.random(), title: "Todo" }, { id: Math.random(), title: "Doing" }])
+    const columnTitle = useRef([])
+    const errors = useRef(null)
 
 
     const postData = async (newBoard) => {
@@ -23,7 +25,7 @@ function NewBoardForm() {
                 body: JSON.stringify(newBoard),
             })
             const json = await response.json()
-            
+
             getData()
             window.location.reload()
         } catch (error) {
@@ -31,40 +33,99 @@ function NewBoardForm() {
         }
     }
 
+
+    const handleErrors = (e) => {
+        const inputs = document.getElementsByTagName('input')
+        const errorMsgs = document.querySelectorAll('.error-msg')
+        console.log(inputs)
+    
+        //if any input is empty, show error message
+    
+        let hasErrors = false;
+    
+        [...inputs].forEach((input, index) => {
+            if (input.value === '') {
+                errorMsgs[index].classList.remove('hidden');
+                input.classList.add('input-error');
+                hasErrors = true;
+            } else {
+                errorMsgs[index].classList.add('hidden');
+            }
+        })
+
+        errors.current = hasErrors
+    }
+
+    const deleteError = () =>{
+
+        const inputs = document.getElementsByTagName('input')
+        const errorMsgs = document.querySelectorAll('.error-msg')
+
+        const inputArray = [...inputs]
+
+        inputArray.forEach((input, index) => {
+            input.classList.remove('input-error')
+            errorMsgs[index].classList.add('hidden')
+        })
+    }
+
     //function that handles new board submit
 
     const handleSubmit = (e) => {
-        e.preventDefault();
-        handleNewColumn();
-         const newBoard = {
-            username: username,
-            title: e.target['board-title'].value,
-            columns: columnTitle.current,
-        } 
+        e.preventDefault()
+        handleNewColumn()
 
-        postData(newBoard) 
-        setShowAddModal(false)
-        
+        //check for errors
+
+        console.log(errors)
+
+        if (!errors.current) {
+            const newBoard = {
+                username: username,
+                title: e.target['board-title'].value,
+                columns: columnTitle.current,
+            }
+
+            postData(newBoard)
+            setShowAddModal(false)
+        }
+
     }
 
-
-
     
-     const handleNewColumn = (e) => {
-        
-            const newColumnInputs = document.querySelectorAll('.new-column-input input')
+
+
+    const handleNewColumn = (e) => {
+
+        const newBoardForm = document.querySelector('.add-new-board-from')
+        const columnInputs = newBoardForm.querySelectorAll('.new-column-input input')
+
+
+        //check for errors
+
+
+
+        console.log(columnInputs)
+
+        //check for errors
+
+        handleErrors()
+
+        if (!errors.current) {
+
+            //set column titles
 
             const newColumnValues = newColumns.map((column, index) => {
-                  return column.title = newColumnInputs[index].value  
-               
+                return column.title = columnInputs[index].value
             })
 
             columnTitle.current = newColumnValues
-            setNewColumns(newColumnValues)      
-            
-    } 
-    
-    
+            setNewColumns(newColumnValues)
+        }
+
+    }
+
+
     const addNewColumns = () => {
         const newColumn = {
             id: Math.random(),
@@ -77,9 +138,17 @@ function NewBoardForm() {
     return (
         <form action="post" onSubmit={handleSubmit} className='add-new-from add-new-board-from'>
             <h2 className='add-new-title heading-l'>Add New Board</h2>
-            <div className="add-new-input-box">
+            <div className="add-new-input-box ">
                 <label htmlFor="board-title" className='body-l'>Board Name</label>
-                <input id='board-title' name='board-title' type="text" placeholder='e.g. Web Design' />
+                <div className="input-container">
+                    <input className='board-title input' id='board-title' maxLength={20} name='board-title' type="text" placeholder='e.g. Web Design' onChange={(e) => {
+                        if (e.target.classList.contains('input-error')) {
+                            e.target.classList.remove('input-error')
+                        }
+                        deleteError()
+                    }} />
+                    <ErrorMsg></ErrorMsg>
+                </div>
             </div>
             <div className="add-new-input-box">
                 <label htmlFor="board-columns" className='body-l'>Board Columns</label>

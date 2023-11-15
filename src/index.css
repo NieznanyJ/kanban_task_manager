@@ -129,3 +129,21 @@
     height: 100vh;
     background-color: rgba(0,0,0,0.4);
 }
+
+.hidden{
+    display: none;
+}
+
+.input-error{
+    border: 1px solid var(--red) !important;
+}
+
+.error-msg{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 10px;
+    width: 15ch;
+    width: auto;
+    color: var(--red);
+}

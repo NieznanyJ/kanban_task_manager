@@ -4,6 +4,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   width: 90%;
+  max-width: 480px;
   height: -moz-max-content;
   height: max-content;
   max-height: 550px;
@@ -48,6 +49,12 @@
   flex-direction: column;
   gap: 10px;
   width: 100%;
+}
+
+.input-container {
+  position: relative;
+  width: 100%;
+  overflow: visible;
 }
 
 .add-new-input-box input, .add-new-input-box textarea, .selection-box {

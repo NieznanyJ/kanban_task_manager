@@ -31,6 +31,33 @@ function App() {
     }
   }
 
+  const handleErrors = (e) => {
+    const inputs = document.getElementsByTagName('input')
+    const errorMsgs = document.querySelectorAll('.error-msg')
+    console.log(inputs)
+
+    //if any input is empty, show error message
+
+    let hasErrors = false;
+
+    [...inputs].forEach((input, index) => {
+        if (input.value === '') {
+            errorMsgs[index].classList.remove('hidden');
+            input.classList.add('input-error');
+            hasErrors = true;
+        } else {
+            errorMsgs[index].classList.add('hidden');
+        }
+    });
+
+    [...inputs].forEach((input,index) => {
+        input.addEventListener('input', (e) => {
+            errorMsgs[index].classList.add('hidden');
+        })
+    })
+
+     errors.current = hasErrors
+}
 
 
   useEffect(() => {

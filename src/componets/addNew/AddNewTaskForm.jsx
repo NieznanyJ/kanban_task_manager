@@ -4,6 +4,7 @@ import NewSubtaskInput from './NewSubtaskInput'
 import { UserContext, ModalBoxContext, AppContext } from '../../context/Context'
 import IconChevronDown from '../icons/IconChevronDown'
 import IconChevronUp from '../icons/IconChevronUp'
+import ErrorMsg from '../ErrorMsg'
 
 
 function AddNewTaskForm() {
@@ -16,10 +17,11 @@ function AddNewTaskForm() {
 
   const [newSubtasks, setNewSubtasks] = useState([{ id: Math.random(), title: "Make Coffe" }, { id: Math.random(), title: "Drink coffee & smile" }])
   const subtaskTitle = useRef([])
+  const errors = useRef(null)
 
   const [currentOption, setCurrentOption] = useState(currentBoard.columns[0])
   const [statusBox, setStatusBox] = useState(false)
-  
+
 
 
   const postData = async (newBoard) => {
@@ -44,34 +46,83 @@ function AddNewTaskForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleNewColumn();
+    handleNewTask();
     const newTask = {
       username: username,
       title: e.target['board-title'].value,
       subtasks: subtaskTitle.current,
     }
 
-    postData(newBoard)
-    setShowAddModal(false)
+    if (!errors.current) {
+     /*  postData(newTask)
+      setShowAddModal(false) */
+    }
 
   }
 
 
 
+  const handleErrors = (e) => {
+    const inputs = document.getElementsByTagName('input')
+    const errorMsgs = document.querySelectorAll('.error-msg')
+    console.log(inputs)
+    const inputArray = [...inputs]
+
+    //if any input is empty, show error message
+
+    let hasErrors = false;
+
+    inputArray.forEach((input, index) => {
 
 
-
-  const handleNewColumn = (e) => {
-
-    const newSubtaskInout = document.querySelectorAll('.new-column-input input')
-
-    const newSubtaskValue = newSubtasks.map((subtask, index) => {
-      return subtask.title = newSubtaskInout[index].value
+      if (input.value === '') {
+        errorMsgs[index].classList.remove('hidden');
+        input.classList.add('input-error');
+        hasErrors = true;
+      } else {
+        errorMsgs[index].classList.add('hidden');
+        input.classList.remove('input-error');
+        hasErrors = false;
+      }
 
     })
+  }
 
-    subtaskTitle.current = newColumnValues
-    setNewColumns(newSubtaskValue)
+  const deleteError = () =>{
+
+    const inputs = document.getElementsByTagName('input')
+    const errorMsgs = document.querySelectorAll('.error-msg')
+
+    const inputArray = [...inputs]
+
+    inputArray.forEach((input, index) => {
+        input.classList.remove('input-error')
+        errorMsgs[index].classList.add('hidden')
+    })
+}
+
+
+
+
+  const handleNewTask = (e) => {
+
+    const newBoardForm = document.querySelector('.add-new-task-from')
+    const columnInputs = newBoardForm.querySelectorAll('.new-column-input input')
+
+
+    handleErrors()
+
+    if (!errors.current) {
+      const newSubtaskValue = newSubtasks.map((subtask, index) => {
+        return subtask.title = newSubtaskInout[index].value
+
+      })
+
+      subtaskTitle.current = newColumnValues
+      setNewColumns(newSubtaskValue)
+    }
+
+
 
   }
 
@@ -91,14 +142,17 @@ function AddNewTaskForm() {
   }
 
 
-  
+
 
   return (
     <form action="post" onSubmit={handleSubmit} className='add-new-from add-new-task-from'>
       <h2 className='add-new-title heading-l'>Add New Task</h2>
       <div className="add-new-input-box">
         <label htmlFor="task-title" className='body-l'>Title</label>
-        <input id='task-title' name='task-title' type="text" placeholder='e.g. Take coffee break' />
+      <div className="input-container">
+      <input id='task-title' name='task-title' type="text" placeholder='e.g. Take coffee break' onChange={deleteError} />
+    <ErrorMsg></ErrorMsg>
+      </div>
       </div>
       <div className="add-new-input-box">
         <label htmlFor="task-description" className='body-l'>Description</label>
@@ -119,17 +173,17 @@ function AddNewTaskForm() {
 
         <div className="add-new-input-box">
           <label htmlFor="task-status" className='body-l'>Status</label>
-          <div name="task-status" id='task-status' className="selection-box" onClick={() => {setStatusBox(prev => {return !prev})}}>
-          <p className="current-option body-l">{currentOption}</p>
-          {statusBox ?  <IconChevronUp></IconChevronUp> : <IconChevronDown></IconChevronDown>}
-          {statusBox && <div className="option-box">
-            {currentBoard.columns && currentBoard.columns.map((column) => {
-              return (<p key={column.id} className="option body-l" onClick={() => {setCurrentOption(column)}}>{column}</p>)
-            })}
-          </div>}
+          <div name="task-status" id='task-status' className="selection-box" onClick={() => { setStatusBox(prev => { return !prev }) }}>
+            <p className="current-option body-l">{currentOption}</p>
+            {statusBox ? <IconChevronUp></IconChevronUp> : <IconChevronDown></IconChevronDown>}
+            {statusBox && <div className="option-box">
+              {currentBoard.columns && currentBoard.columns.map((column) => {
+                return (<p key={column.id} className="option body-l" onClick={() => { setCurrentOption(column) }}>{column}</p>)
+              })}
+            </div>}
           </div>
 
-          
+
         </div>
 
         <button type='submit' className='btn add-new-btn main-btn body-m'>Create New Board</button>

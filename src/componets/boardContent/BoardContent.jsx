@@ -10,9 +10,10 @@ function BoardContent() {
 
   const currentColumnsLength = useRef(null)
 
-  if (currentBoard.columns.length){
-     currentColumnsLength.current = currentBoard.columns.length
-  }
+ 
+
+  currentBoard.columns.length !== 0 ? currentColumnsLength.current = currentBoard.columns.length : currentColumnsLength.current = null
+
 
   return (
     <section className="board-content">
