@@ -81,6 +81,10 @@
   cursor: pointer;
 }
 
+.selection-box-active {
+  border: 1px solid var(--main-purple);
+}
+
 .option-box {
   position: absolute;
   top: 40px;

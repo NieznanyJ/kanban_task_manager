@@ -16,7 +16,7 @@ app.use(express.json()) // req.body
 app.get('/boards/:username', async (req, res) => {
     const { username } = req.params;
     try {
-        const boards = await pool.query(`SELECT * FROM boards WHERE username = $1`, [username]) // query to db
+        const boards = await pool.query(`SELECT * FROM boards WHERE username = $1`, [username]) 
         res.json(boards.rows)
     } catch (error) {
         console.error(error)
@@ -26,7 +26,7 @@ app.get('/boards/:username', async (req, res) => {
 
 
 const checkDuplicate = async (title, username) => {
-    const currentBoards = await pool.query(`SELECT * FROM boards WHERE username = $1`, [username]);
+    const currentBoards = await pool.query(`SELECT * FROM boards2 WHERE username = $1`, [username]);
     const duplicate = currentBoards.rows.find(board => board.title === title);
     return duplicate; // Return the duplicate board if found, or undefined if not found
 };
@@ -50,7 +50,7 @@ app.post('/boards/:username', async (req, res) => {
             res.json({ success: true });
         }          
         
-        res.json(req.body)
+        /* res.json(req.body) */
         console.log("success")
     } catch (error) {
         console.error(error)
@@ -81,12 +81,67 @@ app.delete('/boards/:username/:id', async (req, res) => {
 
     try {
         await pool.query(`DELETE FROM boards WHERE id = $1`, [id])
+        await pool.query(`DELETE FROM tasks WHERE board = $1`, [id])
         console.log('deleted successfully')
     } catch (error) {
         console.error(error)
     }
 
 })
+
+
+// add tasks
+app.post('/tasks/:username/:board', async (req, res) => {
+    const { board } = req.params;
+    const { taskId, boardId, username, title, description, subtasks, status } = req.body;
+
+    try {
+        const task = await pool.query(`INSERT INTO tasks (taskId, boardId, board, username, title, description, subtasks, status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`, [taskId, boardId, board, username, title, description, subtasks, status]);
+        res.json(task);
+        console.log('Task added successfully');
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+//get tasks
+
+app.get('/tasks/:username/:board', async (req, res) => {
+    try {
+        const { board, username } = req.params;
+        const queryResult = await pool.query('SELECT * FROM tasks WHERE username = $1',
+            [ username]
+        );
+
+        const tasks = queryResult.rows;
+        res.json(tasks);
+    } catch (error) {
+        console.error('Error fetching tasks:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+
+//update task status 
+
+app.put('/tasks/:taskId/:username/:board', async (req, res) => {
+    
+        const {  taskId, username, board } = req.body;
+        const {  boardId, status } = req.params;
+    try{
+        await pool.query('UPDATE tasks SET status = $1 WHERE taskId = $2', [status, taskId])
+        console.log('Task status updated successfully');
+
+    
+
+        res.json({ success: true });
+
+    }catch(error){
+        console.error(error)
+    }
+})
+
 
 
 app.listen(PORT, () => console.log(`Server running at PORT ${PORT}`))

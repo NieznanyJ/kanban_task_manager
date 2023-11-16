@@ -13,11 +13,18 @@ CREATE TABLE columns (
     task TEXT[]
 );
 
+
+
+
 CREATE TABLE tasks (
-    board VARCHAR(255) PRIMARY KEY,
-    column_name VARCHAR(255),
+    taskId NUMERIC PRIMARY KEY,
+    boardId VARCHAR(255),
+    board VARCHAR(255),
+    username VARCHAR(255),
     title VARCHAR(255),
-    subtask TEXT[]
+    description VARCHAR(255),
+    subtasks TEXT[],
+    status VARCHAR(255)
 );
 
 CREATE TABLE users (

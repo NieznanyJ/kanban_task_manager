@@ -4,7 +4,6 @@
     padding: 1em;
     display: flex;
     gap: 1rem;
-    border: 1px solid lime;
     overflow-x: scroll;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
@@ -20,7 +19,6 @@
     align-items: flex-start;
     scroll-snap-align: center;
     color: #fff;
-    border: 1px solid #fff;
     width: 280px;
     flex-shrink: 0;
 
@@ -28,6 +26,7 @@
 
 .column-title{
     text-transform: uppercase;
+    padding: 2px 0;
     color: var(--medium-gray);
 }
 
@@ -45,15 +44,6 @@
 }
 
 
-.tasks-box{
-    width: 100%;
-    height: 100%;
-    padding: 1em 0;
-    display: flex;
-    flex-direction: column;
-    gap: 1em;
-    overflow-y: scroll;
-}
 
 .new-column{
     display: flex;
@@ -61,25 +51,81 @@
     justify-content: center;
     align-items: center;
     background-color: #2B2C37;
+    border-radius: 5px;
     color: var(--medium-gray);
     transition: all .3 ease;
-    cursor: pointer;
+    cursor: pointer;background-color: #97979740;
 }
 
 .new-column:hover{
-    background-color: #3B3C47; 
+    background-color: #97979760; 
+}
+
+
+.tasks-box{
+    width: 100%;
+    height: 100%;
+    padding: 1em 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
 }
 
 
 .task{
     flex-shrink: 0;
     width: 100%;
-    height: 150px;
-    background-color: var(--red);
+    height: 88px;
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background-color: #97979740;
     border-radius: 5px;
+    scroll-snap-align: center;
+    cursor: pointer;
+}
+
+.task:hover{
+    background-color: #97979760;
+    transition: all .3s ease;
 }
 
 
+.task-description{
+    color: var(--medium-gray);
+}
+
+.subtask-list{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 10px;
+}
+
+.subtask-container{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: var(--very-dark-gray);
+    cursor: pointer;
+}
+
+.subtask-checkbox{
+    width: 15px;
+    height: 15px;
+    accent-color: var(--main-purple);
+    cursor: pointer;
+}
 
 
 .dragging{

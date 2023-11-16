@@ -24,15 +24,17 @@ function AddNewTaskForm() {
 
 
 
-  const postData = async (newBoard) => {
+  const postTask = async (newTask) => {
 
     try {
-      const response = await fetch(`http://localhost:8000/boards/${username}`, {
+
+
+      const response = await fetch(`http://localhost:8000/tasks/${username}/${currentBoard.title}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(newBoard),
+        body: JSON.stringify(newTask),
       })
       const json = await response.json()
 
@@ -48,14 +50,18 @@ function AddNewTaskForm() {
     e.preventDefault();
     handleNewTask();
     const newTask = {
+      taskId: Math.random(),
+      boardId: currentBoard.id,
       username: username,
-      title: e.target['board-title'].value,
-      subtasks: subtaskTitle.current,
+      title: e.target['task-title'].value,
+      description: e.target['task-description'].value,
+      subtasks: newSubtasks,
+      status: currentOption
     }
 
     if (!errors.current) {
-      /*  postData(newTask)
-       setShowAddModal(false) */
+      postTask(newTask)
+      setShowAddModal(false)
     }
 
   }
@@ -87,18 +93,23 @@ function AddNewTaskForm() {
       }
 
     })
+    errors.current = hasErrors
   }
 
   const deleteError = () => {
 
-    const inputs = document.getElementsByTagName('input')
+    const form = document.querySelector('.add-new-from')
+    const inputs = form.getElementsByTagName('input')
     const errorMsgs = document.querySelectorAll('.error-msg')
 
     const inputArray = [...inputs]
 
     inputArray.forEach((input, index) => {
-      input.classList.remove('input-error')
-      errorMsgs[index].classList.add('hidden')
+      input.addEventListener('input', (e) => {
+        e.target.classList.remove('input-error')
+        errorMsgs[index].classList.add('hidden')
+      })
+
     })
   }
 
@@ -108,19 +119,19 @@ function AddNewTaskForm() {
   const handleNewTask = (e) => {
 
     const newBoardForm = document.querySelector('.add-new-task-from')
-    const columnInputs = newBoardForm.querySelectorAll('.new-column-input input')
+    const newSubtaskInput = newBoardForm.querySelectorAll('.new-column-input input')
 
 
     handleErrors()
 
     if (!errors.current) {
       const newSubtaskValue = newSubtasks.map((subtask, index) => {
-        return subtask.title = newSubtaskInout[index].value
+        return subtask.title = newSubtaskInput[index].value
 
       })
 
-      subtaskTitle.current = newColumnValues
-      setNewColumns(newSubtaskValue)
+      subtaskTitle.current = newSubtaskValue
+      setNewSubtasks(newSubtaskValue)
     }
 
 
@@ -131,7 +142,8 @@ function AddNewTaskForm() {
   const addNewSubtask = () => {
     const newSubtask = {
       id: Math.random(),
-      title: "",
+      title: ""
+
     };
     setNewSubtasks((prev) => [...prev, newSubtask]);
   };
@@ -174,7 +186,10 @@ function AddNewTaskForm() {
 
         <div className="add-new-input-box">
           <label htmlFor="task-status" className='body-l'>Status</label>
-          <div name="task-status" id='task-status' className="selection-box" onClick={() => { setStatusBox(prev => { return !prev }) }}>
+          <div name="task-status" id='task-status' className="selection-box" onClick={(e) => { 
+            setStatusBox(prev => { return !prev }) 
+            e.target.classList.toggle('selection-box-active')
+            }}>
             <p className="current-option body-l">{currentOption}</p>
             {statusBox ? <IconChevronUp></IconChevronUp> : <IconChevronDown></IconChevronDown>}
             {statusBox && <div className="option-box">
@@ -187,7 +202,7 @@ function AddNewTaskForm() {
 
         </div>
 
-        <button type='submit' className='btn add-new-btn main-btn body-m'>Create New Board</button>
+        <button type='submit' className='btn add-new-btn main-btn body-m'>Create Task</button>
       </div>
 
     </form>

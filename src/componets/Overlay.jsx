@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { ModalBoxContext } from '../context/Context'
 
 
-function Overlay({setShowDeleteBoardModal}) {
+function Overlay({setShowDeleteBoardModal, setShowTaskWindow}) {
 
   const [showModalBox, setShowModalBox, setShowAddModal, addMode, setAddMode, showEditModal, setShowEditModal, showAddTask, setShowAddTask] = useContext(ModalBoxContext)
   const screenWidth = window.innerWidth;
@@ -13,6 +13,7 @@ function Overlay({setShowDeleteBoardModal}) {
     if (setShowDeleteBoardModal){setShowDeleteBoardModal(false)}
     setShowEditModal(false)
     setShowAddTask(false)
+    setShowTaskWindow(false)
   }
 
   return (

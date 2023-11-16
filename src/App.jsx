@@ -17,7 +17,10 @@ function App() {
 
   const [boards, setBoards] = useState(null)
   const [currentBoard, setCurrentBoard] = useState({ id: 0, username: "", title: "No Boards", columns: [] })
-  const username = "xcvxcvcx"
+  const screenWidth = window.innerWidth;
+  const username = "ziomek"
+
+
 
   const getData = async () => {
 
@@ -25,7 +28,6 @@ function App() {
       const response = await fetch(`http://localhost:8000/boards/${username}`)
       const json = await response.json()
       setBoards(json)
-      boards ? setCurrentBoard(boards[boards.length-1]) : setCurrentBoard({ id: 0, username: "", title: "No Boards", columns: [] })
 
     } catch (error) {
       console.error(error)
@@ -79,7 +81,7 @@ function App() {
   },[currentBoard])
 
   const [logged, setLogged] = useState(true);
-  const [showModalBox, setShowModalBox] = useState(true);
+  const [showModalBox, setShowModalBox] = useState(screenWidth < 768 ? false : true);
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showAddTask, setShowAddTask] = useState(true);

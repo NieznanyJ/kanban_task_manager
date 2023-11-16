@@ -7,16 +7,19 @@ function NewSubtaskInput({id, placeholder, newSubtasks, setNewSubtasks}) {
 
     
 
-  const deleteError = () =>{
+  const deleteError = (e) =>{
 
-    const inputs = document.getElementsByTagName('input')
+    const form = document.querySelector('.add-new-from')
+    const inputs = form.getElementsByTagName('input')
     const errorMsgs = document.querySelectorAll('.error-msg')
 
     const inputArray = [...inputs]
 
     inputArray.forEach((input, index) => {
-        input.classList.remove('input-error')
-        errorMsgs[index].classList.add('hidden')
+        input.addEventListener('input', (e) => {
+          input.classList.remove('input-error')
+          errorMsgs[index].classList.add('hidden')
+        })
     })
 }
 
@@ -32,9 +35,10 @@ function NewSubtaskInput({id, placeholder, newSubtasks, setNewSubtasks}) {
   return (
     <div className='new-column-input' key={id}>
       <div className="input-container">
-      <input itemID={id} className='new-column-input input' id='board-columns' value={currentValue} name='board-columns' type="text" placeholder={placeholder ? "e.g. "+placeholder : ""}  onChange={(e) => {
+      <input itemID={id} className='new-column-input input' id='board-columns' value={currentValue} name='board-columns' type="text" placeholder={placeholder ? "e.g. "+placeholder : ""}  
+      onChange={(e) => {
         onChange(e)
-        deleteError()
+        deleteError(e)
         
       }}/>
     <ErrorMsg></ErrorMsg>
