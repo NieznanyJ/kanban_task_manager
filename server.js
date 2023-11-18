@@ -110,9 +110,7 @@ app.post('/tasks/:username/:board', async (req, res) => {
 app.get('/tasks/:username/:board', async (req, res) => {
     try {
         const { board, username } = req.params;
-        const queryResult = await pool.query('SELECT * FROM tasks WHERE username = $1',
-            [ username]
-        );
+        const queryResult = await pool.query('SELECT * FROM tasks WHERE username = $1 AND board = $2', [username, board]);
 
         const tasks = queryResult.rows;
         res.json(tasks);
@@ -125,14 +123,15 @@ app.get('/tasks/:username/:board', async (req, res) => {
 
 //update task status 
 
-app.put('/tasks/:taskId/:username/:board', async (req, res) => {
+app.put('/tasks/:username/:board', async (req, res) => {
     
-        const {  taskId, username, board } = req.body;
-        const {  boardId, status } = req.params;
+        const {  username, board } = req.params;
+        const {  taskId, boardId, status } = req.body;
+        console.log(taskId, boardId, status)
     try{
         await pool.query('UPDATE tasks SET status = $1 WHERE taskId = $2', [status, taskId])
         console.log('Task status updated successfully');
-
+        
     
 
         res.json({ success: true });
@@ -141,6 +140,24 @@ app.put('/tasks/:taskId/:username/:board', async (req, res) => {
         console.error(error)
     }
 })
+
+app.put('/tasks/:username/:board/:taskId', async (req, res) => {
+    
+    const {  username, board, taskId } = req.params
+    const subtasks = req.body
+try{
+    await pool.query('UPDATE tasks SET subtasks = $1 WHERE taskId = $2', [subtasks, taskId]) 
+    console.log('Subtasks updated successfully');
+    
+
+
+    res.json({ success: true });
+
+}catch(error){
+    console.error(error)
+}
+})
+
 
 
 

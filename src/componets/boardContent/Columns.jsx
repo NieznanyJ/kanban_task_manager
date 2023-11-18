@@ -28,7 +28,11 @@ function Columns({ title }) {
                 subtasks: task.subtasks.map(subtask => JSON.parse(subtask))
             }));
 
+
+            
             setTasks(tasks)
+           
+
 
         } catch (error) {
             console.error(error)
@@ -36,7 +40,10 @@ function Columns({ title }) {
     }
 
 
-   
+    
+
+
+
 
     const colors = ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3',
         '#03a9f4', '#00bcd4', '#009688', '#4caf50', '#8bc34a', '#cddc39',
@@ -57,13 +64,10 @@ function Columns({ title }) {
 
     useEffect(() => {
         console.log(currentTask)
-    },[currentTask])
+    }, [currentTask])
 
 
     //drag and drop
-
-    const draggable = document.querySelectorAll('.draggable')
-    const containers = document.querySelectorAll('.tasks-box')
 
 
 
@@ -89,18 +93,11 @@ function Columns({ title }) {
                 e.target.insertBefore(draggable, afterElement);
             }
 
-
-
-
         }
     };
 
 
-    /* tasks.forEach(task => {
-        task.subtasks.forEach(subtask => {
-            console.log(subtask.title)
-        })
-    }) */
+
 
     const getDragAfterElement = (container, y) => {
         const draggableElements = [...container.querySelectorAll('.draggable:not(.dragging)')]
@@ -118,29 +115,34 @@ function Columns({ title }) {
 
 
 
-    const YourComponent = ({ column, Children }) => {
-        const childrenCount = React.Children.count(Children);
-    }
+
+
 
 
     return (
         <div className="columns-box">
             {currentBoard.columns.map((column, index) => {
-                const childrenCount = task1.filter(task => task.col_name === column).length;
+
+
+                const nrOfTasks = tasks.filter(task => task.status === column).length;
 
                 return (
                     <div key={index} className="column">
                         <div className="column-title-box" >
                             <div className="color-dot" style={{ backgroundColor: columnColors[index] }}></div>
-                            <h3 className='column-title heading-s'>{column}({childrenCount})</h3>
+                            <h3 className='column-title heading-s'>{column}({nrOfTasks})</h3>
                         </div>
                         <div className="tasks-box" onDragOver={(e) => { dragOver(e, column) }}>
                             {tasks.map((task, index) => {
-                                if (task.status === column) {
+                                if (task.status === column && task.board === currentBoard.title) {
                                     return (<Task
+                                        getTasks={getTasks}
+                                        currentTask={currentTask}
                                         setCurrentTask={setCurrentTask}
+                                        showTaskWindow={showTaskWindow}
                                         setShowTaskWindow={setShowTaskWindow}
-                                        id={index}
+                                        taskId={task.taskid}
+                                        boardId={task.boardid}
                                         key={index}
                                         title={task.title}
                                         description={task.description}
@@ -157,7 +159,6 @@ function Columns({ title }) {
 
             })}
             <NewColumn></NewColumn>
-            {currentTask && showTaskWindow && <TaskWindow getTasks={getTasks} setShowTaskWindow={setShowTaskWindow} currentTask={currentTask}></TaskWindow>}
         </div>
     );
 }

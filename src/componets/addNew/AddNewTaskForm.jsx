@@ -15,7 +15,7 @@ function AddNewTaskForm() {
   const [boards, setBoards, currentBoard, setCurrentBoard] = useContext(AppContext)
 
 
-  const [newSubtasks, setNewSubtasks] = useState([{ id: Math.random(), title: "Make Coffe" }, { id: Math.random(), title: "Drink coffee & smile" }])
+  const [newSubtasks, setNewSubtasks] = useState([{ id: Math.random(), title: "Make Coffe", checked: false }, { id: Math.random(), title: "Drink coffee & smile", checked: false }])
   const subtaskTitle = useRef([])
   const errors = useRef(null)
 
@@ -49,6 +49,7 @@ function AddNewTaskForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     handleNewTask();
+
     const newTask = {
       taskId: Math.random(),
       boardId: currentBoard.id,
@@ -58,6 +59,9 @@ function AddNewTaskForm() {
       subtasks: newSubtasks,
       status: currentOption
     }
+
+    console.log(newTask)
+
 
     if (!errors.current) {
       postTask(newTask)
@@ -142,17 +146,15 @@ function AddNewTaskForm() {
   const addNewSubtask = () => {
     const newSubtask = {
       id: Math.random(),
-      title: ""
+      title: "",
+      checked: false
 
     };
     setNewSubtasks((prev) => [...prev, newSubtask]);
+    console.log(newSubtasks)
+
   };
 
-  const showStatusBox = () => {
-
-
-
-  }
 
 
 

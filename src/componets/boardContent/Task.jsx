@@ -1,46 +1,60 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
+import TaskWindow from './TaskWindow';
 
 
-function Task({ id, title, description, subtasks, status, dragStart, dragEnd, setShowTaskWindow, setCurrentTask }) {
 
+function Task({ taskId, boardId, title, description, subtasks, status, dragStart, dragEnd, setShowTaskWindow, showTaskWindow, setCurrentTask, currentTask, getTasks }) {
 
-    const selectTask = (id) => {
+    const [checked, setChecked] = useState(subtasks.filter(subtask => subtask.checked === true).length)
+
+    const selectTask = (taskId) => {
         const taskItems = document.querySelectorAll(".task");
-        
+
         const selectedTask = {
-            id: id,
+            taskId: taskId,
+            boardId: boardId,
             title: title,
             description: description,
             subtasks: subtasks,
             status: status
         }
 
+        console.log(selectedTask)
+
         setCurrentTask(selectedTask)
-   
+
 
     }
 
 
+    useEffect(() => {
+        getTasks()
+    },[checked])
 
 
-return (
-    <div
-    onClick={
-        () => {
-            selectTask(title)
-            setShowTaskWindow(true)
-        }
-    }
-        onDragStart={dragStart}
-        onDragEnd={dragEnd}
-        draggable="true"
-        className="task draggable"
-        id={id}>
+    return (
+        <>
+            <div
+                onClick={
+                    () => {
+                        selectTask(taskId)
+                        setShowTaskWindow(true)
+                    }
+                }
+                onDragStart={dragStart}
+                onDragEnd={dragEnd}
+                draggable="true"
+                className="task draggable"
+                id={taskId}>
 
-        <h3 className='task-title heading-m'>{title}</h3>
-        <p className='nr-of-subtasks body-m'> 0 of {subtasks.length} subtasks</p>
-    </div>
-)
+                <h3 className='task-title heading-m'>{title}</h3>
+                {subtasks.length ? <p className='nr-of-subtasks body-m'> {checked} of {subtasks.length} subtasks</p> : null}
+
+            </div>
+            {currentTask && showTaskWindow && <TaskWindow getTasks={getTasks}  setShowTaskWindow={setShowTaskWindow} checked={checked} setChecked={setChecked} currentTask={currentTask}></TaskWindow>}
+            </>
+
+    )
 }
 
 
