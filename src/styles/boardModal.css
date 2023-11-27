@@ -98,6 +98,7 @@
 
 @media screen and (min-width: 768px) {
   .board-modal {
+    min-width: 240px;
     justify-content: space-between;
     padding: 2em 20px 2em 0;
     border-right: 1px solid var(--lines-dark);

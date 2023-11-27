@@ -19,7 +19,7 @@
 
    .upper-bar{
        height: 100% !important;
-       grid-column: 2/8 !important;
+       grid-column: 2/8;
        grid-row: 1/2 !important;
    }
 

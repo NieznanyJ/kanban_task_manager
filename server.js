@@ -16,7 +16,7 @@ app.use(express.json()) // req.body
 app.get('/boards/:username', async (req, res) => {
     const { username } = req.params;
     try {
-        const boards = await pool.query(`SELECT * FROM boards WHERE username = $1`, [username]) 
+        const boards = await pool.query(`SELECT * FROM boards WHERE username = $1`, [username])
         res.json(boards.rows)
     } catch (error) {
         console.error(error)
@@ -46,10 +46,10 @@ app.post('/boards/:username', async (req, res) => {
             res.status(400).json({ error: 'Duplicate board title' });
         } else {
             await pool.query(`INSERT INTO boards (id, username, title, columns) VALUES ($1, $2, $3, $4)`, [id, username, title, columns]);
-            
+
             res.json({ success: true });
-        }          
-        
+        }
+
         /* res.json(req.body) */
         console.log("success")
     } catch (error) {
@@ -124,38 +124,72 @@ app.get('/tasks/:username/:board', async (req, res) => {
 //update task status 
 
 app.put('/tasks/:username/:board', async (req, res) => {
-    
-        const {  username, board } = req.params;
-        const {  taskId, boardId, status } = req.body;
-        console.log(taskId, boardId, status)
-    try{
+
+    const { username, board } = req.params;
+    const { taskId, boardId, status } = req.body;
+    console.log(taskId, boardId, status)
+    try {
         await pool.query('UPDATE tasks SET status = $1 WHERE taskId = $2', [status, taskId])
         console.log('Task status updated successfully');
-        
-    
+
+
 
         res.json({ success: true });
 
-    }catch(error){
+    } catch (error) {
         console.error(error)
     }
 })
 
 app.put('/tasks/:username/:board/:taskId', async (req, res) => {
-    
-    const {  username, board, taskId } = req.params
+
+    const { username, board, taskId } = req.params
     const subtasks = req.body
-try{
-    await pool.query('UPDATE tasks SET subtasks = $1 WHERE taskId = $2', [subtasks, taskId]) 
-    console.log('Subtasks updated successfully');
-    
+    try {
+        await pool.query('UPDATE tasks SET subtasks = $1 WHERE taskId = $2', [subtasks, taskId])
+        console.log('Subtasks updated successfully');
 
 
-    res.json({ success: true });
 
-}catch(error){
-    console.error(error)
-}
+        res.json({ success: true });
+
+    } catch (error) {
+        console.error(error)
+    }
+})
+
+
+//update task
+
+app.put('/tasks/edit/:username/:board/:taskId', async (req, res) => {
+
+    const { username, board, taskId } = req.params
+    const { title, description, subtasks, status } = req.body
+    try {
+        await pool.query('UPDATE tasks SET title = $1, description = $2, subtasks = $3, status = $4 WHERE taskId = $5 AND username = $6', [title, description, subtasks, status, taskId, username])
+        console.log('Task updated successfully');
+        console.log(taskId)
+
+
+        res.json({ success: true });
+
+    } catch (error) {
+        console.error(error)
+    }
+})
+
+
+
+app.delete('/tasks/:username/:board/:taskId', async (req, res) => {
+    const { taskId } = req.params
+
+    try {
+        await pool.query(`DELETE FROM tasks WHERE taskId = $1`, [taskId])
+        console.log('deleted successfully')
+    } catch (error) {
+        console.error(error)
+    }
+
 })
 
 

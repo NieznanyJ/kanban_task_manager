@@ -17,10 +17,22 @@ function App() {
 
   const [boards, setBoards] = useState(null)
   const [currentBoard, setCurrentBoard] = useState({ id: 0, username: "", title: "No Boards", columns: [] })
-  const screenWidth = window.innerWidth;
   const username = "ziomek"
 
 
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth)
+    
+    useEffect(() => {
+        const handleResize = () => {
+          setScreenWidth(window.innerWidth);
+        };
+        
+        window.addEventListener('resize', handleResize);
+    
+        return () => {
+          window.removeEventListener('resize', handleResize);
+        };
+      }, []);
 
   const getData = async () => {
 
@@ -86,13 +98,19 @@ function App() {
   const [showEditModal, setShowEditModal] = useState(false);
   const [showAddTask, setShowAddTask] = useState(true);
   const [addMode, setAddMode] = useState(null);
+  const [sidebarHidden, setSidebarHidden] = useState(false)
+
+
+  useEffect(() => {
+    screenWidth > 768 ? setShowModalBox(true) : setShowModalBox(false)
+  }, [screenWidth])
 
   return (
     <div className="app" style={{ height: '100vh' }}>
       <UserContext.Provider value={[logged, setLogged, username, getData]}>
         {logged ?
           <>
-            <AppContext.Provider value={[boards, setBoards, currentBoard, setCurrentBoard]}>
+            <AppContext.Provider value={[boards, setBoards, currentBoard, setCurrentBoard, sidebarHidden, setSidebarHidden]}>
               <ModalBoxContext.Provider value={[showModalBox, setShowModalBox, setShowAddModal, addMode, setAddMode, showEditModal, setShowEditModal, showAddTask, setShowAddTask]}>
                 {showModalBox && <BoardModal></BoardModal>}
                 <UpperBar></UpperBar>

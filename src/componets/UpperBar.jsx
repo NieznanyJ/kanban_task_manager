@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import IconLogoMobile from './icons/IconLogoMobile'
 import IconChevronUp from './icons/IconChevronUp'
 import IconChevronDown from './icons/IconChevronDown'
@@ -21,9 +21,20 @@ function UpperBar() {
 
     const [showDeleteBoardModal, setShowDeleteBoardModal] = useState(false)
     const [showBoardOptionModal, setShowBoardOptionModal] = useState(false)
-    const screenWidth = window.innerWidth;
-
     
+    const [screenWidth, setScreenWidth] = useState(window.innerWidth)
+    
+    useEffect(() => {
+        const handleResize = () => {
+          setScreenWidth(window.innerWidth);
+        };
+    
+        window.addEventListener('resize', handleResize);
+    
+        return () => {
+          window.removeEventListener('resize', handleResize);
+        };
+      }, []);
 
     
 

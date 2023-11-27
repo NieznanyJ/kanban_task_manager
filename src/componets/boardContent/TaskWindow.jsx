@@ -1,19 +1,25 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import Overlay from '../Overlay'
-import { AppContext } from '../../context/Context'
+import { AppContext, ModalBoxContext } from '../../context/Context'
 import IconChevronDown from '../icons/IconChevronDown';
 import IconChevronUp from '../icons/IconChevronUp';
+import IconElipse from '../icons/IconElipse';
+import TaskOptionModal from './TaskOptionModal';
+
 
 
 function TaskWindow({ currentTask, setShowTaskWindow, getTasks, checked, setChecked }) {
 
     const [boards, setBoards, currentBoard] = useContext(AppContext);
+    const [showModalBox, setShowModalBox, setShowAddModal, addMode, setAddMode, showEditModal, setShowEditModal, showAddTask, setShowAddTask] = useContext(ModalBoxContext)
 
     const curr = useRef(currentTask.status)
     const col = useRef(null)
     const [currentOption, setCurrentOption] = useState(currentTask.status)
     const [statusBox, setStatusBox] = useState(false)
     const [subtaskDone, setSubtaskDone] = useState(currentTask.subtasks.filter(subtask => subtask.checked === true).length)
+    const [showTaskOptionModal, setShowTaskOptionModal] = useState(false)
+    
 
 
     const checkSubtask =  async (checkedTasks) =>{
@@ -132,9 +138,14 @@ function TaskWindow({ currentTask, setShowTaskWindow, getTasks, checked, setChec
     return (
         <>
             <Overlay setShowTaskWindow={setShowTaskWindow}></Overlay>
+            
             <div className='add-new-from'>
-                <h3 className="task-title heading-l">{currentTask.title}</h3>
-                <p className="task-description body-l">{currentTask.title}</p>
+                <div className='task-title task-title-box' style={{'display' : 'flex', 'justifyContent' : 'space-between', 'alignItems' : 'center', 'position' : 'relative'}}>
+                    <h3 className="task-title heading-l">{currentTask.title}</h3>
+                    <IconElipse setShowTaskOptionModal={setShowTaskOptionModal}></IconElipse>
+                    {showTaskOptionModal && <TaskOptionModal setShowTaskWindow={setShowTaskWindow} getTasks={getTasks} currentTask={currentTask}></TaskOptionModal>}
+                    </div>
+                <p className="task-description body-l">{currentTask.description}</p>
                {currentTask.subtasks.length ?  <label htmlFor="subtasks" className='body-l'>Subtasks ({subtaskDone} of {currentTask.subtasks.length})</label> : null}
                 <ul className="subtask-list">
                     {currentTask.subtasks && currentTask.subtasks.map((subtask, index) => {

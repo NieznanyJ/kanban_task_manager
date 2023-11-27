@@ -3,7 +3,7 @@ import IconCross from '../icons/IconCross'
 import ErrorMsg from '../ErrorMsg'
 
 
-function NewSubtaskInput({id, placeholder, newSubtasks, setNewSubtasks}) {
+function NewSubtaskInput({id, placeholder, newSubtasks, setNewSubtasks, value}) {
 
     
 
@@ -23,7 +23,7 @@ function NewSubtaskInput({id, placeholder, newSubtasks, setNewSubtasks}) {
     })
 }
 
-    const [currentValue, setCurrentValue] = useState('')
+    const [currentValue, setCurrentValue] = useState(value)
     
     const onChange = (e) =>{
         setCurrentValue(e.target.value)

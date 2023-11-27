@@ -1,11 +1,24 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { ModalBoxContext } from '../context/Context'
 
 
 function Overlay({setShowDeleteBoardModal, setShowTaskWindow}) {
 
   const [showModalBox, setShowModalBox, setShowAddModal, addMode, setAddMode, showEditModal, setShowEditModal, showAddTask, setShowAddTask] = useContext(ModalBoxContext)
-  const screenWidth = window.innerWidth;
+  
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth)
+    
+    useEffect(() => {
+        const handleResize = () => {
+          setScreenWidth(window.innerWidth);
+        };
+    
+        window.addEventListener('resize', handleResize);
+    
+        return () => {
+          window.removeEventListener('resize', handleResize);
+        };
+      }, []);
 
   const closeModals = () =>{
     {screenWidth < 768 && setShowModalBox(false)}

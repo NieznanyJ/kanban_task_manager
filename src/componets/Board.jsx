@@ -6,8 +6,21 @@ function Board({ id, title }) {
 
   const [boards, setBoards, currentBoard, setCurrentBoard] = useContext(AppContext);
   const [showModalBox, setShowModalBox, setShowAddModal] = useContext(ModalBoxContext);
-  const screenWidth = window.innerWidth
 
+  
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth)
+    
+    useEffect(() => {
+        const handleResize = () => {
+          setScreenWidth(window.innerWidth);
+        };
+    
+        window.addEventListener('resize', handleResize);
+    
+        return () => {
+          window.removeEventListener('resize', handleResize);
+        };
+      }, []);
 
   const selectBoard = (title) => {
     const boardItems = document.querySelectorAll(".board-item");

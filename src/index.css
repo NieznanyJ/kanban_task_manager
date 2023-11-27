@@ -155,3 +155,47 @@ body{
     width: auto;
     color: var(--red);
 }
+
+.hide-sidebar-box-sidebar-hidden{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100px;
+    background-color: red;
+}
+
+.sidebar-hidden{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100px;
+    background-color: red !important;
+}
+
+
+.hide-sidebar-box{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    width: 90%;
+    margin: auto;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.show-sidebar-box{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    position: absolute;
+    bottom: 2.5%;
+    left: 0;
+    width: 60px;
+    height: 50px;
+    padding-left: 1em;
+    border-radius:  0 50px 50px 0;
+    background-color: var(--main-purple) ;
+}
+
+

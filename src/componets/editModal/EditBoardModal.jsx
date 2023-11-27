@@ -108,6 +108,7 @@ function EditBoardModal() {
                 input.classList.add('input-error');
                 hasErrors = true;
             } else {
+                
                 errorMsgs[index].classList.add('hidden');
                 input.classList.remove('input-error');
                 hasErrors = false;

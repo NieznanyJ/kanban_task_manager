@@ -13,4 +13,14 @@
   padding: 1em;
   color: var(--medium-gray);
   text-align: center;
+}
+
+.task-option-modal {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 150px;
+  height: 80px;
+  border-radius: 5px;
+  background-color: var(--dark-gray);
 }/*# sourceMappingURL=boardContent.css.map */
