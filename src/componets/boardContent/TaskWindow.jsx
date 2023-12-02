@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import Overlay from '../Overlay'
-import { AppContext, ModalBoxContext } from '../../context/Context'
+import { AppContext, ModalBoxContext, themeContext } from '../../context/Context'
 import IconChevronDown from '../icons/IconChevronDown';
 import IconChevronUp from '../icons/IconChevronUp';
 import IconElipse from '../icons/IconElipse';
@@ -12,6 +12,7 @@ function TaskWindow({ currentTask, setShowTaskWindow, getTasks, checked, setChec
 
     const [boards, setBoards, currentBoard] = useContext(AppContext);
     const [showModalBox, setShowModalBox, setShowAddModal, addMode, setAddMode, showEditModal, setShowEditModal, showAddTask, setShowAddTask] = useContext(ModalBoxContext)
+    const [theme, setTheme] = useContext(themeContext)
 
     const curr = useRef(currentTask.status)
     const col = useRef(null)
@@ -139,7 +140,7 @@ function TaskWindow({ currentTask, setShowTaskWindow, getTasks, checked, setChec
         <>
             <Overlay setShowTaskWindow={setShowTaskWindow}></Overlay>
             
-            <div className='add-new-from'>
+            <div className={theme === 'light' ? 'light-theme add-new-from' : 'add-new-from'}>
                 <div className='task-title task-title-box' style={{'display' : 'flex', 'justifyContent' : 'space-between', 'alignItems' : 'center', 'position' : 'relative'}}>
                     <h3 className="task-title heading-l">{currentTask.title}</h3>
                     <IconElipse setShowTaskOptionModal={setShowTaskOptionModal}></IconElipse>
@@ -150,7 +151,7 @@ function TaskWindow({ currentTask, setShowTaskWindow, getTasks, checked, setChec
                 <ul className="subtask-list">
                     {currentTask.subtasks && currentTask.subtasks.map((subtask, index) => {
                         return (
-                            <div className="subtask-container" key={index} >
+                            <div className={theme === 'light' ? 'light-theme subtask-container' : 'subtask-container'} key={index} >
                                 <input id={index} className='subtask-checkbox' type="checkbox" checked={subtask.checked}   onChange={(e) => {
                                     setCheckedSubtasks(e)  
                                     }}/>
@@ -161,7 +162,7 @@ function TaskWindow({ currentTask, setShowTaskWindow, getTasks, checked, setChec
                 </ul>
                 <div className="add-new-input-box">
                     <label htmlFor="task-status" className='body-l'>Current Status</label>
-                    <div name="task-status" id='task-status' className="selection-box" onClick={(e) => { 
+                    <div name="task-status" id='task-status' className={theme === 'light' ? 'light-theme selection-box' : 'selection-box'} onClick={(e) => { 
                         setStatusBox(prev => { return !prev }) 
                         e.target.classList.toggle('selection-box-active')
                         }}>

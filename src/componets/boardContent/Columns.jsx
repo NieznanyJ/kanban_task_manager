@@ -1,5 +1,5 @@
 import React, { Children, useContext, useEffect, useMemo, useState } from 'react';
-import { AppContext, UserContext } from '../../context/Context';
+import { AppContext, UserContext, themeContext } from '../../context/Context';
 import NewColumn from '../addNew/NewColumn';
 import Task from './Task';
 import TaskWindow from './TaskWindow';
@@ -7,6 +7,8 @@ import TaskWindow from './TaskWindow';
 function Columns({ title }) {
     const [boards, setBoards, currentBoard] = useContext(AppContext);
     const [logged, setLogged, username, getData] = useContext(UserContext);
+    const [theme, setTheme] = useContext(themeContext);
+
     const [nrOfTasks, setNrOfTasks] = useState([]);
 
     const [tasks, setTasks] = useState([])
@@ -120,7 +122,7 @@ function Columns({ title }) {
 
 
     return (
-        <div className="columns-box">
+        <div className={theme === 'light' ? 'light-theme columns-box' : 'columns-box'}>
             {currentBoard.columns.map((column, index) => {
 
 

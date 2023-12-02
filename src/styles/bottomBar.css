@@ -17,4 +17,8 @@
 
 .sign-out-btn:hover {
   background-color: var(--red-hover);
+}
+
+.bottom-bar.light-theme {
+  border-top: 1px solid var(--lines-light);
 }/*# sourceMappingURL=bottomBar.css.map */

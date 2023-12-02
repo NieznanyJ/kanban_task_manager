@@ -70,6 +70,10 @@
   -webkit-overflow-scrolling: touch;
 }
 
+.task.light-theme {
+  box-shadow: 3px 4px 6px 0px rgba(0, 0, 0, 0.1882352941);
+}
+
 .task {
   flex-shrink: 0;
   width: 100%;

@@ -18,9 +18,16 @@
 .task-option-modal {
   position: absolute;
   top: 0;
-  right: 0;
+  right: 20px;
   width: 150px;
   height: 80px;
   border-radius: 5px;
   background-color: var(--dark-gray);
+}
+
+.task-option-modal.light-theme {
+  border: 1px solid var(--lines-light);
+}
+.task-option-modal.light-theme .board-option {
+  color: var(--medium-gray);
 }/*# sourceMappingURL=boardContent.css.map */

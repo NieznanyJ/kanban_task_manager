@@ -139,4 +139,22 @@ select.custom-arrow {
   justify-content: center;
   align-items: center;
   gap: 5px;
+}
+
+.add-new-from.light-theme input {
+  color: var(--black);
+}
+.add-new-from.light-theme label {
+  color: var(--medium-gray);
+}
+.add-new-from.light-theme textarea {
+  color: var(--black);
+}
+
+.selection-box.light-theme .option-box {
+  background-color: var(--white) !important;
+}
+
+.subtask-container.light-theme {
+  background-color: var(--light-background) !important;
 }/*# sourceMappingURL=addNewModal.css.map */

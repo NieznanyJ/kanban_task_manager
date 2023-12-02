@@ -1,11 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import TaskWindow from './TaskWindow';
-
+import { themeContext } from '../../context/Context';
 
 
 function Task({ taskId, boardId, title, description, subtasks, status, dragStart, dragEnd, setShowTaskWindow, showTaskWindow, setCurrentTask, currentTask, getTasks }) {
 
     const [checked, setChecked] = useState(subtasks.filter(subtask => subtask.checked === true).length)
+    const [theme, setTheme] = useContext(themeContext)
 
     const selectTask = (taskId) => {
         const taskItems = document.querySelectorAll(".task");
@@ -44,7 +45,7 @@ function Task({ taskId, boardId, title, description, subtasks, status, dragStart
                 onDragStart={dragStart}
                 onDragEnd={dragEnd}
                 draggable="true"
-                className="task draggable"
+                className={theme === 'light' ? 'light-theme task draggable' : 'task draggable'}
                 id={taskId}>
 
                 <h3 className='task-title heading-m'>{title}</h3>

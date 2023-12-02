@@ -150,4 +150,27 @@ select.custom-arrow {
 }
 
 
+.add-new-from.light-theme{
+    input{
+        color: var(--black);
+    }
+    label{
+        color: var(--medium-gray);
+    }
+    textarea{
+        color: var(--black);
+    }
+    
+}
+.selection-box.light-theme{
+    .option-box{
+        background-color: var(--white) !important;
 
+    }
+   
+}
+
+
+.subtask-container.light-theme{
+    background-color: var(--light-background) !important;
+}

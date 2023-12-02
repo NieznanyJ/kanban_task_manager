@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react'
 import NewColumnInput from './NewColumnInput'
-import { UserContext, ModalBoxContext } from '../../context/Context'
+import { UserContext, ModalBoxContext, themeContext } from '../../context/Context'
 import ErrorMsg from '../ErrorMsg'
 
 function NewBoardForm() {
@@ -8,6 +8,7 @@ function NewBoardForm() {
 
     const [logged, setLogged, username, getData] = useContext(UserContext)
     const [showModalBox, setShowModalBox, setShowAddModal, addMode, setAddMode, showEditModal, setShowEditModal, showAddTask, setShowAddTask] = useContext(ModalBoxContext)
+    const [theme, setTheme] = useContext(themeContext)
 
     const [newColumns, setNewColumns] = useState([{ id: Math.random(), title: "Todo" }, { id: Math.random(), title: "Doing" }])
     const columnTitle = useRef([])
@@ -137,7 +138,7 @@ function NewBoardForm() {
 
 
     return (
-        <form action="post" onSubmit={handleSubmit} className='add-new-from add-new-board-from'>
+        <form action="post" onSubmit={handleSubmit} className={theme ==='light' ? 'light-theme add-new-from add-new-board-from' : 'add-new-from add-new-board-from'}>
             <h2 className='add-new-title heading-l'>Add New Board</h2>
             <div className="add-new-input-box ">
                 <label htmlFor="board-title" className='body-l'>Board Name</label>

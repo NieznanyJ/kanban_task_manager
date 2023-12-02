@@ -6,6 +6,14 @@
   height: 80px;
   border-radius: 5px;
   background-color: var(--dark-gray);
+  z-index: 50;
+}
+
+.board-option-modal.light-theme {
+  border: 1px solid var(--lines-light);
+}
+.board-option-modal.light-theme .board-option {
+  color: var(--medium-gray);
 }
 
 .board-option-list {

@@ -1,5 +1,5 @@
 import React, { useContext, useRef } from 'react'
-import { AppContext } from '../../context/Context'
+import { AppContext, themeContext } from '../../context/Context'
 import NoColumns from './NoColumns'
 import Columns from './Columns'
 
@@ -7,6 +7,7 @@ import Columns from './Columns'
 function BoardContent() {
 
   const [boards, setBoards, currentBoard] = useContext(AppContext)
+  const [theme, setTheme] = useContext(themeContext)
 
   const currentColumnsLength = useRef(null)
 
@@ -16,7 +17,7 @@ function BoardContent() {
 
 
   return (
-    <section className="board-content">
+    <section className={theme === 'light' ? 'light-theme board-content' : 'board-content'}>
 
     {currentColumnsLength.current && currentBoard.columns  ? <Columns></Columns> :   <NoColumns></NoColumns>}
 

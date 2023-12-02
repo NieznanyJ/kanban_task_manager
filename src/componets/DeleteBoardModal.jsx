@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import {AppContext, UserContext} from '../context/Context'
+import {AppContext, UserContext, themeContext} from '../context/Context'
 
 
 function DeleteBoardModal({setShowDeleteBoardModal}) {
@@ -7,7 +7,7 @@ function DeleteBoardModal({setShowDeleteBoardModal}) {
 
     const [boards, setBoards, currentBoard] = useContext(AppContext)
     const [logged, setLogged, username, getData] = useContext(UserContext)
-
+    const [theme, setTheme] = useContext(themeContext)
     //delete a database 
 
     const deleteBoard = async () => {
@@ -22,7 +22,7 @@ function DeleteBoardModal({setShowDeleteBoardModal}) {
 
     
   return (
-    <div className="delete-board-modal">
+    <div className={theme === 'light' ? 'light-theme delete-board-modal' : 'delete-board-modal'}>
         <h3 className='delete-board-title heading-l'>Delete this board ?</h3>
         <p className='delete-board-text body-l'>Are you sure you want to delete the '{currentBoard.title}' board? This action will remove all columns and tasks and cannot be reversed.</p>
         <div className="delete-board-modal-button-box">

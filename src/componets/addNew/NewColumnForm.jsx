@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import NewColumnInput from './NewColumnInput'
-import { UserContext, ModalBoxContext, AppContext } from '../../context/Context'
+import { UserContext, ModalBoxContext, AppContext, themeContext } from '../../context/Context'
 
 
 function NewColumnForm() {
@@ -11,6 +11,8 @@ function NewColumnForm() {
     const [logged, setLogged, username, getData] = useContext(UserContext)
     const [boards, setBoards, currentBoard, setCurrentBoard] = useContext(AppContext)
     const [showModalBox, setShowModalBox, setShowAddModal] = useContext(ModalBoxContext)
+    const [theme, setTheme] = useContext(themeContext)
+
     const errors = useRef(null)
 
 
@@ -112,7 +114,7 @@ function NewColumnForm() {
 
 
     return (
-        <form action="post" onSubmit={handleSubmit} className='add-new-from add-new-board-from'>
+        <form action="post" onSubmit={handleSubmit} className={theme === 'light' ? 'light-theme add-new-from add-new-board-from' : 'add-new-from add-new-board-from'}>
             <h2 className='add-new-title heading-l'>Add New Column</h2>
 
             <div className="add-new-input-box">

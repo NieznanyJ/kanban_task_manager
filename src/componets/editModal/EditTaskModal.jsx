@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import NewSubtaskInput from '../addNew/NewSubtaskInput'
-import { UserContext, ModalBoxContext, AppContext } from '../../context/Context'
+import { UserContext, ModalBoxContext, AppContext, themeContext } from '../../context/Context'
 import IconChevronDown from '../icons/IconChevronDown'
 import IconChevronUp from '../icons/IconChevronUp'
 import ErrorMsg from '../ErrorMsg'
@@ -11,7 +11,7 @@ function EditTaskModal({currentTask, getTasks, setShowEditTaskModal, setShowTask
     const [logged, setLogged, username, getData] = useContext(UserContext)
     const [showModalBox, setShowModalBox, setShowAddModal] = useContext(ModalBoxContext)
     const [boards, setBoards, currentBoard, setCurrentBoard] = useContext(AppContext)
-
+    const [theme, setTheme] = useContext(themeContext)
 
     const [newSubtasks, setNewSubtasks] = useState(currentTask.subtasks)
     const [taksDescription, setTaskDescription] = useState(currentTask.description)
@@ -163,7 +163,7 @@ function EditTaskModal({currentTask, getTasks, setShowEditTaskModal, setShowTask
 
 
     return (
-        <form action="post" onSubmit={handleSubmit} className='add-new-from add-new-task-from' style={{'zIndex' : '100' }}>
+        <form action="post" onSubmit={handleSubmit} className={theme === 'light' ? 'light-theme add-new-from add-new-task-from' : 'add-new-from add-new-task-from'} style={{'zIndex' : '100' }}>
             <h2 className='add-new-title heading-l'>Add New Task</h2>
             <div className="add-new-input-box">
                 <label htmlFor="task-title" className='body-l'>Title</label>
@@ -194,7 +194,7 @@ function EditTaskModal({currentTask, getTasks, setShowEditTaskModal, setShowTask
 
                 <div className="add-new-input-box">
                     <label htmlFor="task-status" className='body-l'>Status</label>
-                    <div name="task-status" id='task-status' className="selection-box" onClick={(e) => {
+                    <div name="task-status" id='task-status' className={theme === 'light' ? 'light-theme selection-box' : 'selection-box'} onClick={(e) => {
                         setStatusBox(prev => { return !prev })
                         e.target.classList.toggle('selection-box-active')
                     }}>

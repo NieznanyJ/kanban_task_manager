@@ -1,13 +1,14 @@
 import React, { useContext } from 'react'
 import IconHideSidebar from './icons/IconHideSidebar'
 import { useState } from 'react'
-import { AppContext } from '../context/Context'
+import { AppContext, themeContext } from '../context/Context'
 import IconShowSidebar from './icons/IconShowSidebar'
 
 
 function HideSidebarToggle({ setShowModalBox }) {
 
     const [boards, setBoards, currentBoard, setCurrentBoard, sidebarHidden, setSidebarHidden] = useContext(AppContext);
+    const [theme, setTheme] = useContext(themeContext)
 
     const toggleSidebar = () => {
 
@@ -35,7 +36,7 @@ function HideSidebarToggle({ setShowModalBox }) {
 
     return (
 
-        <div id='hide-sidebar-box' className="hide-sidebar-box  heading-m" >
+        <div id='hide-sidebar-box' className={theme === 'light' ? 'light-theme hide-sidebar-box  heading-m' : 'hide-sidebar-box  heading-m'} >
             {!sidebarHidden ? <><IconHideSidebar toggleSidebar={toggleSidebar}></IconHideSidebar> Hide Sidebar</> 
             :
             <IconShowSidebar sidebarHidden={sidebarHidden} toggleSidebar={toggleSidebar}></IconShowSidebar> }

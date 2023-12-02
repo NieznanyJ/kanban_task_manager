@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import NewColumnInput from '../addNew/NewColumnInput'
 import Overlay from '../Overlay'
-import { UserContext, ModalBoxContext, AppContext } from '../../context/Context'
+import { UserContext, ModalBoxContext, AppContext, themeContext } from '../../context/Context'
 import ErrorMsg from '../ErrorMsg'
 
 
@@ -9,6 +9,7 @@ function EditBoardModal() {
     const [logged, setLogged, username, getData] = useContext(UserContext)
     const [showModalBox, setShowModalBox, setShowAddModal, addMode, setAddMode, showEditModal, setShowEditModal, showAddTask, setShowAddTask] = useContext(ModalBoxContext)
     const [boards, setBoards, currentBoard, setCurrentBoard] = useContext(AppContext)
+    const [theme, setTheme] = useContext(themeContext)
 
     const [newColumns, setNewColumns] = useState(null)
     const columnTitle = useRef([])
@@ -182,7 +183,7 @@ function EditBoardModal() {
     return (
         <>
             <Overlay></Overlay>
-            <form action="post" onSubmit={handleSubmit} className='add-new-from edit-board-form'>
+            <form action="post" onSubmit={handleSubmit} className={theme === 'light' ? 'light-theme add-new-from edit-board-form' : 'add-new-from edit-board-form'}>
                 <h2 className='add-new-title heading-l'>Edit Board</h2>
                 <div className="add-new-input-box">
                     <label htmlFor="board-title" className='body-l'>Board Name</label>

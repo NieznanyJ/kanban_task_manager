@@ -6,7 +6,7 @@ import ToggleSwitch from './ToggleSwitch';
 import IconDarkTheme from './icons/IconDarkTheme'
 import IconLightTheme from './icons/IconLightTheme'
 import IconHideSidebar from './icons/IconHideSidebar'
-import { AppContext, ModalBoxContext } from '../context/Context';
+import { AppContext, ModalBoxContext, themeContext } from '../context/Context';
 import IconLogoDark from './icons/IconLogoDark';
 import IconLogoLight from './icons/IconLogoLight';
 import HideSidebarToggle from './HideSidebarToggle';
@@ -18,9 +18,9 @@ function BoardModal() {
 
     const [boards, setBoards, currentBoard, setCurrentBoard] = useContext(AppContext);
     const [showModalBox, setShowModalBox, setShowAddModal, addMode, setAddMode, showEditModal, setShowEditModal, showAddTask, setShowAddTask] = useContext(ModalBoxContext);
-
+    const [theme, setTheme] = useContext(themeContext)
     const [darkTheme, setDarkTheme] = useState(false)
-   
+
 
     const [screenWidth, setScreenWidth] = useState(window.innerWidth)
 
@@ -36,7 +36,7 @@ function BoardModal() {
         };
     }, []);
 
-    
+
 
     const nrOfBoards = boards ? boards.length : 0
 
@@ -46,11 +46,14 @@ function BoardModal() {
 
         <>
             {screenWidth <= 768 && <Overlay ></Overlay>}
-            <div className="board-modal">
-                {screenWidth >= 768 && <IconLogoLight></IconLogoLight>}
-                <div className='boards-container'>
+            <div className={theme === 'light' ? 'light-theme board-modal' : 'board-modal'}>
+                {screenWidth >= 768 && (
+                    <>
+                        {theme === 'light' ? <IconLogoDark /> : <IconLogoLight /> }
+                    </>
+                )}                <div className={theme === 'light' ? 'light-theme boards-container' : 'boards-container'}>
                     <h3 className='heading-m' style={{ textTransform: 'uppercase', paddingLeft: '1em' }}>All boards ({nrOfBoards})</h3>
-                    <ul className="boards-list">
+                    <ul className={theme === 'light' ? 'light-theme boards-list' : 'boards-list'}>
                         {boards ? boards.map((board) => {
                             return (
                                 <Board key={board.id} id={board.id} title={board.title}></Board>
@@ -69,7 +72,7 @@ function BoardModal() {
                     </h3>
                 </div>
 
-                <div className="theme-box">
+                <div className={theme === 'light' ? 'light-theme theme-box' : 'theme-box'}>
                     <IconLightTheme darkTheme={darkTheme}></IconLightTheme>
                     <ToggleSwitch setDarkTheme={setDarkTheme}></ToggleSwitch>
                     <IconDarkTheme darkTheme={darkTheme}></IconDarkTheme>
