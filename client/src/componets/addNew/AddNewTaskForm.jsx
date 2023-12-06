@@ -30,7 +30,7 @@ function AddNewTaskForm() {
     try {
 
 
-      const response = await fetch(`${process.env.SERVER_URL}/tasks/${username}/${currentBoard.title}`, {
+      const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/tasks/${username}/${currentBoard.title}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

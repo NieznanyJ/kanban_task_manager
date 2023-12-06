@@ -23,7 +23,7 @@ function Columns({ title }) {
     const getTasks = async () => {
 
         try {
-            const response = await fetch(`${process.env.SERVER_URL}/tasks/${username}/${currentBoard.title}`)
+            const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/tasks/${username}/${currentBoard.title}`)
             const json = await response.json()
             const tasks = json.map(task => ({
                 ...task,

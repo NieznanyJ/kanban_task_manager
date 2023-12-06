@@ -30,7 +30,7 @@ function EditTaskModal({ currentTask, getTasks, setShowEditTaskModal, setShowTas
 
         try {
 
-            const response = await fetch(`${process.env.SERVER_URL}/tasks/edit/${username}/${currentBoard.title}/${currentTask.taskId}`, {
+            const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/tasks/edit/${username}/${currentBoard.title}/${currentTask.taskId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'

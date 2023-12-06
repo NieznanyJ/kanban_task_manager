@@ -13,7 +13,7 @@ function TaskOptionModal({currentTask, getTasks, setShowTaskWindow}) {
     const [showEditTaskModal, setShowEditTaskModal] = useState(false)
 
     const deleteTask = async () => {
-        const response = await fetch(`${process.env.SERVER_URL}/tasks/${username}/${currentBoard.title}/${currentTask.taskId}`, {
+        const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/tasks/${username}/${currentBoard.title}/${currentTask.taskId}`, {
             method: 'DELETE',
         })
        

@@ -26,7 +26,7 @@ function TaskWindow({ currentTask, setShowTaskWindow, getTasks, checked, setChec
     const checkSubtask =  async (checkedTasks) =>{
 
         try{
-            const response = await fetch(`${process.env.SERVER_URL}/tasks/${currentTask.username}/${currentBoard.title}/${currentTask.taskId}`, {
+            const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/tasks/${currentTask.username}/${currentBoard.title}/${currentTask.taskId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -50,7 +50,7 @@ function TaskWindow({ currentTask, setShowTaskWindow, getTasks, checked, setChec
     const putStatus = async (newStatus) => {
             
             try{
-                const response = await fetch(`${process.env.SERVER_URL}/tasks/${currentTask.username}/${currentBoard.title}`, {
+                const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/tasks/${currentTask.username}/${currentBoard.title}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json'

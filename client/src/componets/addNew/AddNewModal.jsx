@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import Overlay from '../Overlay'
-import NewBoardForm from './newBoardForm'
+import NewBoardForm from './NewBoardForm'
 import { ModalBoxContext } from '../../context/Context'
 import NewColumnForm from './NewColumnForm'
 import AddNewTaskForm from './AddNewTaskForm'

@@ -39,7 +39,7 @@ function EditBoardModal() {
     const putData = async (newBoard) => {
 
         try {
-            const response = await fetch(`${process.env.SERVER_URL}/boards/${username}/${currentBoard.id}`, {
+            const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/boards/${username}/${currentBoard.id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -58,7 +58,7 @@ function EditBoardModal() {
     const postData = async (newBoard) => {
 
         try {
-            const response = await fetch(`${process.env.SERVER_URL}/boards/${username}`, {
+            const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/boards/${username}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
