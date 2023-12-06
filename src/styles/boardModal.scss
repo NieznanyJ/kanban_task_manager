@@ -158,7 +158,26 @@
         overflow: auto;
     }
 
-    *::-webkit-scrollbar{
-        width: 5px;
+    ::-webkit-scrollbar{
+        width: 2px;
     }
+    ::-webkit-scrollbar-track{
+        background: transparent ;
+    }
+    
+    
+    ::-webkit-scrollbar-track{
+        background: transparent ;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: var(--main-purple);
+        border-radius: 10px;
+        
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--main-purple-hover);
+        transition: all .3s ease;
+    }
+    
+      
 }

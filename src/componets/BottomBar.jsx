@@ -4,13 +4,16 @@ import HideSidebarToggle from './HideSidebarToggle';
 
 function BottomBar() {
 
-  const [logged, setLogged, username] = useContext(UserContext)
+  const [logged, setLogged, username, setUsername, getData, setAuthToken, cookies, setCookkie, removeCookie] = useContext(UserContext)
   const [boards, setBoards, currentBoard, setCurrentBoard, sidebarHidden, setSidebarHidden] = useContext(AppContext);
   const [showModalBox, setShowModalBox, setShowAddModal, addMode, setAddMode, showEditModal, setShowEditModal, showAddTask, setShowAddTask] = useContext(ModalBoxContext);
   const [theme, setTheme] = useContext(themeContext)
 
   const signOut = (e) => {
     console.log("signing out")
+    removeCookie('authToken')
+    removeCookie('Username')
+    window.location.reload()
   }
 
   return (

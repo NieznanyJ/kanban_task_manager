@@ -1,13 +1,14 @@
 @font-face {
     font-family: JakartaSans;
     src: url(/public/fonts/PlusJakartaSans-VariableFont_wght.woff2);
-    weight: 200 800;
+    font-weight: 200 800;
+    
 }
 
 @font-face {
     font-family: JakartaSansItalic;
     src: url(/public/fonts/PlusJakartaSans-Italic-VariableFont_wght.woff2);
-    weight: 200 800;
+    font-weight: 200 800;
 }
 
 *{
@@ -53,18 +54,21 @@ body{
     font-size: 24px;
     font-weight: bold;
     line-height: 30px;
+    
 }
 
 .heading-l{
     font-size: 18px;
     font-weight: bold;
     line-height: 23px;
+    
 }
 
 .heading-m{
     font-size: 15px;
     font-weight: bold;
     line-height: 19px;
+    
 }
 
 .heading-s{
@@ -72,18 +76,21 @@ body{
     font-weight: bold;
     line-height: 15px;
     letter-spacing: 2.4px;
+    
 }
 
 .body-l{
     font-size: 13px;
     font-weight: 500;
     line-height: 23px;
+    
 }
 
 .body-m{
     font-size: 12px;
     font-weight: bold;
     line-height: 15px;
+    
 }
 
 
@@ -202,6 +209,9 @@ body{
 *{
     transition: all .2s ease;
 }
+
+
+
 .light-theme{
     background-color: var(--white) !important;
     transition:  all .3s ease;

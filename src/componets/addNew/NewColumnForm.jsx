@@ -22,7 +22,7 @@ function NewColumnForm() {
     const putData = async (newBoard) => {
 
         try {
-            const response = await fetch(`http://localhost:8000/boards/${username}/${currentBoard.id}`, {
+            const response = await fetch(`${process.env.SERVER_URL}/boards/${username}/${currentBoard.id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'

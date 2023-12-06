@@ -1,15 +1,18 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import IconBoard from './icons/IconBoard'
 import { AppContext, ModalBoxContext } from '../context/Context';
+import { useSearchParams } from 'react-router-dom';
 
 function Board({ id, title }) {
 
   const [boards, setBoards, currentBoard, setCurrentBoard] = useContext(AppContext);
   const [showModalBox, setShowModalBox, setShowAddModal] = useContext(ModalBoxContext);
 
-  
+  const [searchParams, setSearchParams] = useSearchParams({currentBoardTitle: currentBoard.title})
   const [screenWidth, setScreenWidth] = useState(window.innerWidth)
     
+
+  //scren resize
     useEffect(() => {
         const handleResize = () => {
           setScreenWidth(window.innerWidth);
@@ -22,6 +25,9 @@ function Board({ id, title }) {
         };
       }, []);
 
+
+
+
   const selectBoard = (title) => {
     const boardItems = document.querySelectorAll(".board-item");
     
@@ -30,7 +36,14 @@ function Board({ id, title }) {
          board.classList.add("selected-board-item");
         
         const selectedBoard = boards.filter((board) => board.title === title);
+
         setCurrentBoard(selectedBoard.length > 0 ? selectedBoard[0] : null);
+        try {
+          setSearchParams({ currentBoardTitle: title });
+        } catch (error) {
+          console.log(error);
+        }
+
       } else {
         board.classList.remove("selected-board-item");
       }
@@ -40,9 +53,15 @@ function Board({ id, title }) {
 
 
   useEffect(()=>{
-    if (currentBoard){
-      selectBoard(currentBoard.title)
+    if (searchParams.get('currentBoardTitle')){
+      selectBoard(searchParams.get('currentBoardTitle'))
     }
+    else{
+      if (currentBoard){
+        selectBoard(currentBoard.title)
+      }
+    }
+    
   },[currentBoard])
 
 

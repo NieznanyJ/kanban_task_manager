@@ -12,7 +12,7 @@ function BoardContent() {
   const currentColumnsLength = useRef(null)
 
  
-
+ 
   currentBoard.columns.length !== 0 ? currentColumnsLength.current = currentBoard.columns.length : currentColumnsLength.current = null
 
 

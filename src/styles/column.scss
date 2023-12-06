@@ -5,7 +5,7 @@
     display: flex;
     gap: 1rem;
     overflow-x: scroll;
-    scroll-snap-type: x mandatory;
+    scroll-snap-type: x ;
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
 }
@@ -73,6 +73,7 @@
     overflow-y: scroll;
     scroll-snap-type: y mandatory;
     scroll-behavior: smooth;
+    
     -webkit-overflow-scrolling: touch;
 }
 

@@ -8,7 +8,7 @@ import TaskOptionModal from './TaskOptionModal';
 
 
 
-function TaskWindow({ currentTask, setShowTaskWindow, getTasks, checked, setChecked }) {
+function TaskWindow({ currentTask, setShowTaskWindow, getTasks, checked, setChecked, subtaskDone, setSubtaskDone }) {
 
     const [boards, setBoards, currentBoard] = useContext(AppContext);
     const [showModalBox, setShowModalBox, setShowAddModal, addMode, setAddMode, showEditModal, setShowEditModal, showAddTask, setShowAddTask] = useContext(ModalBoxContext)
@@ -18,7 +18,7 @@ function TaskWindow({ currentTask, setShowTaskWindow, getTasks, checked, setChec
     const col = useRef(null)
     const [currentOption, setCurrentOption] = useState(currentTask.status)
     const [statusBox, setStatusBox] = useState(false)
-    const [subtaskDone, setSubtaskDone] = useState(currentTask.subtasks.filter(subtask => subtask.checked === true).length)
+    
     const [showTaskOptionModal, setShowTaskOptionModal] = useState(false)
     
 
@@ -26,7 +26,7 @@ function TaskWindow({ currentTask, setShowTaskWindow, getTasks, checked, setChec
     const checkSubtask =  async (checkedTasks) =>{
 
         try{
-            const response = await fetch(`http://localhost:8000/tasks/${currentTask.username}/${currentBoard.title}/${currentTask.taskId}`, {
+            const response = await fetch(`${process.env.SERVER_URL}/tasks/${currentTask.username}/${currentBoard.title}/${currentTask.taskId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -34,7 +34,7 @@ function TaskWindow({ currentTask, setShowTaskWindow, getTasks, checked, setChec
                 body: JSON.stringify(checkedTasks),
             })
             const json = await response.json()
-            console.log(json)
+            
             getTasks()
 
         }catch(error){
@@ -45,33 +45,12 @@ function TaskWindow({ currentTask, setShowTaskWindow, getTasks, checked, setChec
     
 
 
-    useEffect(() => {
-        const checkboxes = document.querySelectorAll('.subtask-checkbox')
-        const subtasks  = document.querySelectorAll('.subtask-title')
-
-        let check = checked
-        console.log(check)
-
-        checkboxes.forEach((checkbox, index) => {
-            if (check){
-                checkboxes[check-1].checked = true
-                subtasks[check-1].style.textDecoration = 'line-through'
-                check--
-            }
-            else{
-                checkboxes[check].checked = false
-                /* subtasks[check-1].style.textDecoration = 'none' */
-            }
-            
-            
-        })
-
-    },[])
+    
     
     const putStatus = async (newStatus) => {
             
             try{
-                const response = await fetch(`http://localhost:8000/tasks/${currentTask.username}/${currentBoard.title}`, {
+                const response = await fetch(`${process.env.SERVER_URL}/tasks/${currentTask.username}/${currentBoard.title}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json'
@@ -79,7 +58,7 @@ function TaskWindow({ currentTask, setShowTaskWindow, getTasks, checked, setChec
                     body: JSON.stringify(newStatus),
                 })
                 const json = await response.json()
-                console.log(json)
+                
                 getTasks()
 
             }catch(error){
@@ -96,7 +75,8 @@ function TaskWindow({ currentTask, setShowTaskWindow, getTasks, checked, setChec
         const newStatus = {
             taskId: currentTask.taskId,
             boardId: currentTask.boardId,
-            status: curr.current
+            status: curr.current,
+            subtasks: currentTask.subtasks
         }
 
         setCurrentOption(curr.current)
@@ -108,30 +88,32 @@ function TaskWindow({ currentTask, setShowTaskWindow, getTasks, checked, setChec
 
     const setCheckedSubtasks = (e) => {
 
-        const subtasks  = document.querySelectorAll('.subtask-title')
-        const checkboxes = document.querySelectorAll('.subtask-checkbox')
-
+        const taskWindow = document.getElementById('task-window')
         
+        const subtasks  = document.querySelectorAll('.subtask-title')
+        const checkboxes = taskWindow.querySelectorAll('.subtask-checkbox')
+
+        console.log(checkboxes)
+        console.log(e.target)
         console.log(subtasks[e.target.id])
 
         let check = checked
+       
+        console.log(e.target)
 
-        currentTask.subtasks[e.target.id].checked = !currentTask.subtasks[e.target.id].checked
-        subtasks[e.target.id].style.textDecoration = currentTask.subtasks[e.target.id].checked ? 'line-through' : 'none'
-        currentTask.subtasks[e.target.id].checked ? check++ : check--
+        e.target.checked = !e.target.checked
+
+        e.target.checked = e.target.checked ? false : true
+        currentTask.subtasks[e.target.id].checked = e.target.checked ? true : false
         currentTask.subtasks[e.target.id].checked ? setSubtaskDone(prev => prev + 1) : setSubtaskDone(prev => prev - 1)
 
-        console.log(currentTask.subtasks[e.target.id])
+        const newSubtasks = currentTask.subtasks.map(subtask => {return subtask})
 
-        
+
+
+        console.log(newSubtasks)
        
-        
-
-        checkSubtask(currentTask.subtasks)  
-
-        
-        setChecked(check)
-        console.log(checked)
+        checkSubtask(newSubtasks) 
 
     }
     
@@ -140,7 +122,7 @@ function TaskWindow({ currentTask, setShowTaskWindow, getTasks, checked, setChec
         <>
             <Overlay setShowTaskWindow={setShowTaskWindow}></Overlay>
             
-            <div className={theme === 'light' ? 'light-theme add-new-from' : 'add-new-from'}>
+            <div className={theme === 'light' ? 'light-theme add-new-from' : 'add-new-from'} id='task-window'>
                 <div className='task-title task-title-box' style={{'display' : 'flex', 'justifyContent' : 'space-between', 'alignItems' : 'center', 'position' : 'relative'}}>
                     <h3 className="task-title heading-l">{currentTask.title}</h3>
                     <IconElipse setShowTaskOptionModal={setShowTaskOptionModal}></IconElipse>

@@ -23,13 +23,14 @@ function AddNewTaskForm() {
   const [statusBox, setStatusBox] = useState(false)
 
 
+  
 
   const postTask = async (newTask) => {
 
     try {
 
 
-      const response = await fetch(`http://localhost:8000/tasks/${username}/${currentBoard.title}`, {
+      const response = await fetch(`${process.env.SERVER_URL}/tasks/${username}/${currentBoard.title}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -38,7 +39,9 @@ function AddNewTaskForm() {
       })
       const json = await response.json()
 
-      getData()
+      /* getData() */
+      window.location.reload()
+      
     } catch (error) {
       console.error(error)
     }

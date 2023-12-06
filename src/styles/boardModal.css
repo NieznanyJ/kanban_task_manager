@@ -149,7 +149,22 @@
     max-height: 100%;
     overflow: auto;
   }
-  *::-webkit-scrollbar {
-    width: 5px;
+  ::-webkit-scrollbar {
+    width: 2px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--main-purple);
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--main-purple-hover);
+    -webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
   }
 }/*# sourceMappingURL=boardModal.css.map */

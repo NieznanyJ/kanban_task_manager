@@ -6,7 +6,7 @@ import IconChevronUp from '../icons/IconChevronUp'
 import ErrorMsg from '../ErrorMsg'
 
 
-function EditTaskModal({currentTask, getTasks, setShowEditTaskModal, setShowTaskWindow}) {
+function EditTaskModal({ currentTask, getTasks, setShowEditTaskModal, setShowTaskWindow }) {
 
     const [logged, setLogged, username, getData] = useContext(UserContext)
     const [showModalBox, setShowModalBox, setShowAddModal] = useContext(ModalBoxContext)
@@ -16,7 +16,7 @@ function EditTaskModal({currentTask, getTasks, setShowEditTaskModal, setShowTask
     const [newSubtasks, setNewSubtasks] = useState(currentTask.subtasks)
     const [taksDescription, setTaskDescription] = useState(currentTask.description)
     const subtaskTitle = useRef([])
-    const errors = useRef(null)
+    const [error, setError] = useState(null)
 
     const [currentOption, setCurrentOption] = useState(currentTask.status)
     const [statusBox, setStatusBox] = useState(false)
@@ -24,13 +24,13 @@ function EditTaskModal({currentTask, getTasks, setShowEditTaskModal, setShowTask
     const [edditedTitle, setEdditedTitle] = useState(currentTask.title)
 
 
-   
+
 
     const updateTask = async (newTask) => {
 
         try {
 
-            const response = await fetch(`http://localhost:8000/tasks/edit/${username}/${currentBoard.title}/${currentTask.taskId}`, {
+            const response = await fetch(`${process.env.SERVER_URL}/tasks/edit/${username}/${currentBoard.title}/${currentTask.taskId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -42,7 +42,7 @@ function EditTaskModal({currentTask, getTasks, setShowEditTaskModal, setShowTask
             getTasks()
             setShowEditTaskModal(false)
             setShowTaskWindow(false)
-              
+
         } catch (error) {
             console.error(error)
         }
@@ -52,58 +52,59 @@ function EditTaskModal({currentTask, getTasks, setShowEditTaskModal, setShowTask
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        handleNewTask();
-
-        const newTask = {
-            taskId: currentTask.id,
-            boardId: currentBoard.id,
-            username: username,
-            title: e.target['task-title'].value,
-            description: e.target['task-description'].value,
-            subtasks: newSubtasks,
-            status: currentOption
+        
+        if (handleNewTask()){
+            const newTask = {
+                taskId: currentTask.taskId,
+                boardId: currentBoard.id,
+                username: username,
+                title: e.target['task-title'].value,
+                description: e.target['task-description'].value,
+                subtasks: newSubtasks,
+                status: currentOption
+            }
+    
+    
+            if (error === false) {
+                updateTask(newTask)
+                setShowAddModal(false)
+            }
+            
         }
-
-        console.log(newTask)
-
-
-        if (!errors.current) {
-            updateTask(newTask)
-            setShowAddModal(false)
-        }
+        
 
     }
 
 
 
     const handleErrors = (e) => {
+        
         const form = document.querySelector('.add-new-from')
         const inputs = form.getElementsByTagName('input')
         const errorMsgs = document.querySelectorAll('.error-msg')
-        console.log(inputs)
+
         const inputArray = [...inputs]
 
-        //if any input is empty, show error message
-
-        let hasErrors = false;
 
         inputArray.forEach((input, index) => {
-
 
             if (input.value === '') {
                 errorMsgs[index].classList.remove('hidden');
                 input.classList.add('input-error');
-                hasErrors = true;
-            } else {
-                if (errorMsgs[index]){
+                setError(true)
+            }
+            else {
+                if (errorMsgs[index]) {
                     errorMsgs[index].classList.add('hidden');
                 }
                 input.classList.remove('input-error');
-                hasErrors = false;
+                setError(false)
             }
 
         })
-        errors.current = hasErrors
+
+       
+
     }
 
     const deleteError = () => {
@@ -134,17 +135,20 @@ function EditTaskModal({currentTask, getTasks, setShowEditTaskModal, setShowTask
 
         handleErrors()
 
-        if (!errors.current) {
+        console.log(error)
+        if (error === false) {
             const newSubtaskValue = newSubtasks.map((subtask, index) => {
-                return subtask.title = newSubtaskInput[index].value
+                return subtask = newSubtaskInput[index].value
 
             })
-
+            console.log(newSubtaskValue)
             subtaskTitle.current = newSubtaskValue
             setNewSubtasks(newSubtaskValue)
+
+            return true
         }
 
-
+        return false
 
     }
 
@@ -163,12 +167,12 @@ function EditTaskModal({currentTask, getTasks, setShowEditTaskModal, setShowTask
 
 
     return (
-        <form action="post" onSubmit={handleSubmit} className={theme === 'light' ? 'light-theme add-new-from add-new-task-from' : 'add-new-from add-new-task-from'} style={{'zIndex' : '100' }}>
+        <form action="post" onSubmit={handleSubmit} className={theme === 'light' ? 'light-theme add-new-from add-new-task-from' : 'add-new-from add-new-task-from'} style={{ 'zIndex': '100' }}>
             <h2 className='add-new-title heading-l'>Add New Task</h2>
             <div className="add-new-input-box">
                 <label htmlFor="task-title" className='body-l'>Title</label>
                 <div className="input-container">
-                    <input id='task-title' name='task-title' value={edditedTitle}  type="text" placeholder='e.g. Take coffee break' onChange={(e) => {
+                    <input id='task-title' name='task-title' value={edditedTitle} type="text" placeholder='e.g. Take coffee break' onChange={(e) => {
                         deleteError()
                         setEdditedTitle(e.target.value)
                     }} />
@@ -177,14 +181,14 @@ function EditTaskModal({currentTask, getTasks, setShowEditTaskModal, setShowTask
             </div>
             <div className="add-new-input-box">
                 <label htmlFor="task-description" className='body-l'>Description</label>
-                <textarea id='task-description' value={taksDescription} name='task-description' type="text" placeholder="e.g. It's always good to take a break. This 15 minute break will  recharge the batteries a little."  onChange={(e) => {setTaskDescription(e.target.value)}}/>
+                <textarea id='task-description' value={taksDescription} name='task-description' type="text" placeholder="e.g. It's always good to take a break. This 15 minute break will  recharge the batteries a little." onChange={(e) => { setTaskDescription(e.target.value) }} />
             </div>
             <div className="add-new-input-box">
                 <label htmlFor="board-columns" className='body-l'>Subtasks</label>
                 <div className="add-new-input-box new-column-box">
-                    {newSubtasks && newSubtasks.map((subtask) => {
-                       
-                        return (<NewSubtaskInput key={subtask.id + Math.random()} value={subtask.title} placeholder={subtask.title} newSubtasks={newSubtasks} setNewSubtasks={setNewSubtasks} id={subtask.id}></NewSubtaskInput>)
+                    {newSubtasks && newSubtasks.map((subtask, index) => {
+
+                        return (<NewSubtaskInput key={index} value={subtask.title} placeholder={subtask.title} newSubtasks={newSubtasks} setNewSubtasks={setNewSubtasks} id={subtask.id}></NewSubtaskInput>)
                     })}
                 </div>
             </div>
@@ -201,8 +205,8 @@ function EditTaskModal({currentTask, getTasks, setShowEditTaskModal, setShowTask
                         <p className="current-option body-l">{currentOption}</p>
                         {statusBox ? <IconChevronUp></IconChevronUp> : <IconChevronDown></IconChevronDown>}
                         {statusBox && <div className="option-box">
-                            {currentBoard.columns && currentBoard.columns.map((column) => {
-                                return (<p key={Math.random()} className="option body-l" onClick={() => { setCurrentOption(column) }}>{column}</p>)
+                            {currentBoard.columns && currentBoard.columns.map((column, index) => {
+                                return (<p key={index} className="option body-l" onClick={() => { setCurrentOption(column) }}>{column}</p>)
                             })}
                         </div>}
                     </div>

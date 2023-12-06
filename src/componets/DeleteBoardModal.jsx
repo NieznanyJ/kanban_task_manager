@@ -11,7 +11,7 @@ function DeleteBoardModal({setShowDeleteBoardModal}) {
     //delete a database 
 
     const deleteBoard = async () => {
-        const response = await fetch(`http://localhost:8000/boards/${username}/${currentBoard.id}`, {
+        const response = await fetch(`${process.env.SERVER_URL}/boards/${username}/${currentBoard.id}`, {
             method: 'DELETE',
         }) 
         if (response.status === 200) {

@@ -9,17 +9,28 @@ import AddNewModal from './componets/addNew/AddNewModal';
 import EditBoardModal from './componets/editModal/EditBoardModal';
 import AddNewTaskForm from './componets/addNew/AddNewTaskForm';
 import BoardModal from './componets/BoardModal';
-
+import { useCookies } from 'react-cookie';
 
 
 
 function App() {
-
+  
 
   const [theme, setTheme] = useState('light')
   const [boards, setBoards] = useState(null)
   const [currentBoard, setCurrentBoard] = useState({ id: 0, username: "", title: "No Boards", columns: [] })
-  const username = "ziomek"
+
+  const [cookies, setCookkie, removeCookie] = useCookies(null)
+
+  const [username, setUsername] = useState(cookies.Username)
+   
+  console.log(username)
+
+
+
+  const [authToken, setAuthToken] = useState(cookies.authToken)
+  const [logged, setLogged] = useState(authToken ? true : false);
+  
 
 
   const [screenWidth, setScreenWidth] = useState(window.innerWidth)
@@ -36,12 +47,23 @@ function App() {
     };
   }, []);
 
+
+
   const getData = async () => {
 
     try {
-      const response = await fetch(`http://localhost:8000/boards/${username}`)
+      const response = await fetch(`${process.env.SERVER_URL}/boards/${username}`)
       const json = await response.json()
-      setBoards(json)
+      if(!json.error){
+        setCurrentBoard(json[0])
+        setBoards(json)
+    
+      }
+      else{
+        setCurrentBoard({ id: 0, username: "", title: "No Boards", columns: [] })
+      }
+      
+      
 
     } catch (error) {
       console.error(error)
@@ -77,24 +99,28 @@ function App() {
   }
 
 
+ /*  useEffect(() => {
+    if (authToken) {
+      
+    }
+
+  }, [authToken]) */
   useEffect(() => {
     getData()
-
   }, [])
 
 
 
-  useEffect(() => {
-    if (boards && boards.length) { setCurrentBoard(boards[0]) }
+/*   useEffect(() => {
+    if (boards && boards.length) { setCurrentBoard(boards[boards.length-1]) }
     else { setCurrentBoard({ id: 0, username: "", title: "No Boards", columns: [] }) }
 
   }, [boards, username])
+ */
 
-  useEffect(() => {
-    console.log(currentBoard)
-  }, [currentBoard])
 
-  const [logged, setLogged] = useState(true);
+
+
   const [showModalBox, setShowModalBox] = useState(screenWidth < 768 ? false : true);
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -107,12 +133,18 @@ function App() {
     screenWidth > 768 ? setShowModalBox(true) : setShowModalBox(false)
   }, [screenWidth])
 
+
+
   return (
-    <div className="app" style={{ height: '100vh' }}>
-      <themeContext.Provider value={[theme, setTheme]}>
-        <UserContext.Provider value={[logged, setLogged, username, getData]}>
-          {logged ?
-            <>
+    <div className={theme === 'light' ? 'light-theme app' : 'app'} style={{ height: '100vh' }}>
+      
+        <themeContext.Provider value={[theme, setTheme]}>
+
+          <UserContext.Provider value={[logged, setLogged, username, setUsername, getData, setAuthToken, cookies, setCookkie, removeCookie]}>
+          {authToken && logged ?
+          <>
+
+
               <AppContext.Provider value={[boards, setBoards, currentBoard, setCurrentBoard, sidebarHidden, setSidebarHidden]}>
                 <ModalBoxContext.Provider value={[showModalBox, setShowModalBox, setShowAddModal, addMode, setAddMode, showEditModal, setShowEditModal, showAddTask, setShowAddTask]}>
                   {showModalBox && <BoardModal></BoardModal>}
@@ -126,10 +158,12 @@ function App() {
                 </ModalBoxContext.Provider>
               </AppContext.Provider>
             </> : <LoginPage></LoginPage>
-          }
-        </UserContext.Provider>
-      </themeContext.Provider>
+            }
 
+          </UserContext.Provider>
+        </themeContext.Provider>
+
+      
 
     </div>
   )

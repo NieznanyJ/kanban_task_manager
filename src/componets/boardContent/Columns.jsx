@@ -13,7 +13,7 @@ function Columns({ title }) {
 
     const [tasks, setTasks] = useState([])
     const [showTaskWindow, setShowTaskWindow] = useState(false);
-    const [currentTask, setCurrentTask] = useState(null);
+    
     const [count, setCount] = useState(0);
 
     const task1 = [{ col_name: "Todo", title: "vscs" }, { col_name: "Todo", title: "vscs" }, { col_name: "Doing", title: "ascsac" }]
@@ -23,7 +23,7 @@ function Columns({ title }) {
     const getTasks = async () => {
 
         try {
-            const response = await fetch(`http://localhost:8000/tasks/${username}/${currentBoard.title}`)
+            const response = await fetch(`${process.env.SERVER_URL}/tasks/${username}/${currentBoard.title}`)
             const json = await response.json()
             const tasks = json.map(task => ({
                 ...task,
@@ -64,12 +64,12 @@ function Columns({ title }) {
 
 
 
-    useEffect(() => {
+/*     useEffect(() => {
         console.log(currentTask)
     }, [currentTask])
 
 
-    //drag and drop
+    //drag and drop */
 
 
 
@@ -139,8 +139,6 @@ function Columns({ title }) {
                                 if (task.status === column && task.board === currentBoard.title) {
                                     return (<Task
                                         getTasks={getTasks}
-                                        currentTask={currentTask}
-                                        setCurrentTask={setCurrentTask}
                                         showTaskWindow={showTaskWindow}
                                         setShowTaskWindow={setShowTaskWindow}
                                         taskId={task.taskid}
