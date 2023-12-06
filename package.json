@@ -1,16 +1,17 @@
 {
   "name": "kanban_app",
-  
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    
-    "build": "if-env TYPE=server && (cd server && npm install) || (cd client && npm install)",
     "start": "node ./server/server.js",
+    "dev": "vite",
+    "build": "if-env TYPE=server && (cd server && npm install) || (cd client && npm install)",
+    "preview": "vite preview",
     "client": "cd client && npm start"
   },
   "dependencies": {
     "if-env": "^1.0.4",
-    "react-router-dom": "^6.18.0"
+    "react-router-dom": "^6.18.0",
+    "vite": "^5.0.6"
   }
 }
