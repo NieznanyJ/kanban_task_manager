@@ -14,7 +14,7 @@ function SignUpForm() {
  
 
     const registerUser = async (newUser) => {
-        const response = await fetch(`${process.env.SERVER_URL}/users/registration`, {
+        const response = await fetch(`/users/registration`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

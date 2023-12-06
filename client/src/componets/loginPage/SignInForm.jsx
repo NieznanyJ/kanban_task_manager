@@ -14,7 +14,7 @@ function SignInForm() {
   const [password, setPassword] = useState(null)  
 
   const loginUser = async (user) => {
-    const response = await fetch(`${process.env.SERVER_URL}/users/login/${user.username}/${user.password}`, {
+    const response = await fetch(`/users/login/${user.username}/${user.password}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
