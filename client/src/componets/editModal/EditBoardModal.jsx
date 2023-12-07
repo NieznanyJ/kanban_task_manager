@@ -15,7 +15,7 @@ function EditBoardModal() {
     const columnTitle = useRef([])
     const errors = useRef(null)
 
-    console.log(currentBoard)
+
 
     const currentColumns = currentBoard.columns.map((column) => {
         const newColumn = {
@@ -94,7 +94,7 @@ function EditBoardModal() {
         const form = document.querySelector('.add-new-from')
         const inputs = form.getElementsByTagName('input')
         const errorMsgs = document.querySelectorAll('.error-msg')
-        console.log(inputs)
+
         const inputArray = [...inputs]
 
         //if any input is empty, show error message

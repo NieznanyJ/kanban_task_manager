@@ -64,13 +64,6 @@ function Columns({ title }) {
 
 
 
-/*     useEffect(() => {
-        console.log(currentTask)
-    }, [currentTask])
-
-
-    //drag and drop */
-
 
 
 

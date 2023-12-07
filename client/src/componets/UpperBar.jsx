@@ -39,7 +39,7 @@ function UpperBar() {
 
     
 
-    console.log(theme)
+
 
     return (
         <div className={theme === 'light' ? 'light-theme upper-bar' : 'upper-bar'}>

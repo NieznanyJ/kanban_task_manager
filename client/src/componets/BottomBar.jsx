@@ -10,7 +10,7 @@ function BottomBar() {
   const [theme, setTheme] = useContext(themeContext)
 
   const signOut = (e) => {
-    console.log("signing out")
+   
     removeCookie('authToken')
     removeCookie('Username')
     window.location.reload()

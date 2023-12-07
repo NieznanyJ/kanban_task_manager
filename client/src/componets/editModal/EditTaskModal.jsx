@@ -135,13 +135,13 @@ function EditTaskModal({ currentTask, getTasks, setShowEditTaskModal, setShowTas
 
         handleErrors()
 
-        console.log(error)
+        
         if (error === false) {
             const newSubtaskValue = newSubtasks.map((subtask, index) => {
                 return subtask = newSubtaskInput[index].value
 
             })
-            console.log(newSubtaskValue)
+            
             subtaskTitle.current = newSubtaskValue
             setNewSubtasks(newSubtaskValue)
 
@@ -161,7 +161,7 @@ function EditTaskModal({ currentTask, getTasks, setShowEditTaskModal, setShowTas
 
         };
         setNewSubtasks((prev) => [...prev, newSubtask]);
-        console.log(newSubtasks)
+     
 
     };
 

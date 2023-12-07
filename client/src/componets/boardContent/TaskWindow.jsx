@@ -70,8 +70,7 @@ function TaskWindow({ currentTask, setShowTaskWindow, getTasks, checked, setChec
         
         curr.current = column
 
-        console.log(currentTask.taskId)
-        console.log(currentTask)
+  
         const newStatus = {
             taskId: currentTask.taskId,
             boardId: currentTask.boardId,
@@ -93,13 +92,10 @@ function TaskWindow({ currentTask, setShowTaskWindow, getTasks, checked, setChec
         const subtasks  = document.querySelectorAll('.subtask-title')
         const checkboxes = taskWindow.querySelectorAll('.subtask-checkbox')
 
-        console.log(checkboxes)
-        console.log(e.target)
-        console.log(subtasks[e.target.id])
+      
 
         let check = checked
-       
-        console.log(e.target)
+     
 
         e.target.checked = !e.target.checked
 
@@ -111,7 +107,7 @@ function TaskWindow({ currentTask, setShowTaskWindow, getTasks, checked, setChec
 
 
 
-        console.log(newSubtasks)
+     
        
         checkSubtask(newSubtasks) 
 

@@ -30,7 +30,7 @@ function SignUpForm() {
 
         if (password !== confirmPassword) {
             setError('Passwords do not match') 
-           console.log(password, confirmPassword)
+           
         }
         else{
             setError('Registration successful!') 

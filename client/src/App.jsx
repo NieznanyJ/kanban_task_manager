@@ -24,7 +24,7 @@ function App() {
 
   const [username, setUsername] = useState(cookies.Username)
    
-  console.log(username)
+  
 
 
 
@@ -52,7 +52,7 @@ function App() {
   const getData = async () => {
 
     try {
-      const response = await fetch(`${process.env.SERVER_URL}/boards/${username}`)
+      const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/boards/${username}`)
       const json = await response.json()
       if(!json.error){
         setCurrentBoard(json[0])
@@ -73,7 +73,7 @@ function App() {
   const handleErrors = (e) => {
     const inputs = document.getElementsByTagName('input')
     const errorMsgs = document.querySelectorAll('.error-msg')
-    console.log(inputs)
+  
 
     //if any input is empty, show error message
 

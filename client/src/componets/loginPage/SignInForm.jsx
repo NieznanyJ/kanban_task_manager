@@ -13,6 +13,9 @@ function SignInForm() {
   const [user, setUser] = useState(null)
   const [password, setPassword] = useState(null)  
 
+
+ 
+
   const loginUser = async (user) => {
     const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/users/login/${user.username}/${user.password}`, {
       method: 'GET',
@@ -22,12 +25,12 @@ function SignInForm() {
 
     })
     const json = await response.json()
-    console.log(json)
+ 
     if (!json.error) {
 
       
       setCookie('authToken', json.token)
-      console.log(json.token)
+  
       setCookie('Username', json.userInfo.username)  
     
       setAuthToken(true)

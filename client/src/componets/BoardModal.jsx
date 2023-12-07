@@ -40,7 +40,7 @@ function BoardModal() {
 
     const nrOfBoards = boards ? boards.length : 0
 
-    console.log(darkTheme)
+    
 
     return (
 

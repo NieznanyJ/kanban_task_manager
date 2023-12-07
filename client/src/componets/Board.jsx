@@ -41,7 +41,7 @@ function Board({ id, title }) {
         try {
           setSearchParams({ currentBoardTitle: title });
         } catch (error) {
-          console.log(error);
+          console.error(error);
         }
 
       } else {
